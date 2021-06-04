@@ -12,7 +12,17 @@ import org.springframework.stereotype.Repository;
 public interface DataDAO {
 	Logger logger = LoggerFactory.getLogger("controller.BoardController");
 
-	public List<AutoDTO> autoLevel1(AutoDTO autoDTO) throws Exception;
+	//code01
+//	public List<CategoryDTO> autoLevel1() throws Exception;
+	//code02
+//	public List<Level2DTO> autoLevel2() throws Exception;
+	//code03
+//	public List<AutoDTO> autoLevel3() throws Exception;
+	//code04
+//	public List<AutoDTO> autoLevel4() throws Exception;
+	
+	public List<CategoryDTO> category() throws Exception;
+	
 	
 	//리스트 생성
 	public void insertShoppinglist(Shopping_listDTO listDTO) throws Exception;

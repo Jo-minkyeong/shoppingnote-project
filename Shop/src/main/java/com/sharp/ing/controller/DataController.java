@@ -6,14 +6,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.sharp.ing.domain.AutoDTO;
 import com.sharp.ing.domain.ItemDTO;
+import com.sharp.ing.domain.CategoryDTO;
 import com.sharp.ing.domain.Shopping_listDTO;
 import com.sharp.ing.service.DataService;
 
+@RestController
 @Controller
 public class DataController {
 
@@ -21,12 +25,12 @@ public class DataController {
 	// 생성자에 @Autowired를 붙여줬기때문에 필드에는 붙일 필요 없음
 	private Shopping_listDTO listDTO;
 	private ItemDTO itemDTO;
-	private AutoDTO autoDTO;
 	private DataService service;
-	private List<AutoDTO> autoList;
 
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
-	//List <ItemDTO>
+	
+	List<CategoryDTO> listCategory;
+	
 	// 생성자
 	@Autowired
 	public DataController(Shopping_listDTO listDTO, ItemDTO itemDTO, DataService service) {
@@ -35,30 +39,26 @@ public class DataController {
 		this.service = service;
 	}
 	
-//List<ArticleVO> articlesList = new ArrayList<ArticleVO>();
-//	
-//	@RequestMapping({"/listArticles.do","/"})
-//	public String getArticelList(Model model) {
-//		logger.info("mylog-EntergetArticleList");
-//		logger.info("mylog-EntergetArticleList");
+	//level1
+//	@ResponseBody
+//	@RequestMapping("/level1")
+//	public List<CategoryDTO> getLevel1(Model model) throws Exception {
 //		
-//		articlesList = boardService.listArticles();
-//		model.addAttribute("articlesList", articlesList);
-//		return "listArticles";
+//		level1List=service.AutoLevel1();
+//		model.addAttribute("level1List", level1List);
+//		logger.debug("=========================getLevel1=========================");
+//		return level1List;
 //	}
 	
-	
-	//자동입력
-	@RequestMapping("/auto")
-	public List<AutoDTO> getLevel1() throws Exception {
+	@ResponseBody
+	@RequestMapping("/category")
+	public List<CategoryDTO> Category(Model model) throws Exception {
 		
-		autoDTO.getCode01();
-		autoDTO.getCode01_vl();
-		autoList.add(autoDTO);
-	
-		return autoList;
+		listCategory=service.Category();
+		model.addAttribute("category", listCategory);
+		logger.debug("=========================getLevel1=========================");
+		return listCategory;
 	}
-	
 	
 	// 리스트 생성
 	// RequestMapping = 요청에 대해 어떤 Controller, 어떤 메소드가 처리할지를 맵핑하기 위한 어노테이션(브라우저에 접속할때 붙여줌)

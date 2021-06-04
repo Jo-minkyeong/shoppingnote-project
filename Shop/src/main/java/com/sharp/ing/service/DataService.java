@@ -7,28 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sharp.ing.domain.AutoDTO;
 import com.sharp.ing.domain.DataDAO;
 import com.sharp.ing.domain.ItemDTO;
+import com.sharp.ing.domain.CategoryDTO;
 import com.sharp.ing.domain.Shopping_listDTO;
 
 @Service("service")
 public class DataService {
 
 	private DataDAO dataDAO;
-	private List<AutoDTO> autoList;
 	
 	@Autowired
 	public DataService(DataDAO dataDAO) {
 		this.dataDAO = dataDAO;
 	}
 	
+	//코드테이블
 	@Autowired
-	public List<AutoDTO> AutoLevel1(AutoDTO autoDTO) throws Exception{
-		dataDAO.autoLevel1(autoDTO);
-		return autoList;
+	public List<CategoryDTO> Category() throws Exception{
+		List<CategoryDTO> listCategory = dataDAO.category();
+		return listCategory;
 	}
-	
 	
 	//리스트생성
 	//insert문은 return type이 필요 없음

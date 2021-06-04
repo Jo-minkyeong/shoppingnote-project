@@ -28,9 +28,9 @@ public class DataController {
 	private DataService service;
 
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
-	
+
 	List<CategoryDTO> listCategory;
-	
+
 	// 생성자
 	@Autowired
 	public DataController(Shopping_listDTO listDTO, ItemDTO itemDTO, DataService service) {
@@ -38,28 +38,28 @@ public class DataController {
 		this.itemDTO = itemDTO;
 		this.service = service;
 	}
-	
+
 	//level1
 //	@ResponseBody
 //	@RequestMapping("/level1")
 //	public List<CategoryDTO> getLevel1(Model model) throws Exception {
-//		
+//
 //		level1List=service.AutoLevel1();
 //		model.addAttribute("level1List", level1List);
 //		logger.debug("=========================getLevel1=========================");
 //		return level1List;
 //	}
-	
+
 	@ResponseBody
 	@RequestMapping("/category")
 	public List<CategoryDTO> Category(Model model) throws Exception {
-		
+
 		listCategory=service.Category();
 		model.addAttribute("category", listCategory);
 		logger.debug("=========================getLevel1=========================");
 		return listCategory;
 	}
-	
+
 	// 리스트 생성
 	// RequestMapping = 요청에 대해 어떤 Controller, 어떤 메소드가 처리할지를 맵핑하기 위한 어노테이션(브라우저에 접속할때 붙여줌)
 	@RequestMapping("/shoppinglist")

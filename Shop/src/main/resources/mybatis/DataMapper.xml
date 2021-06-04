@@ -13,7 +13,7 @@
 		<result property="code04" column="code04"/>
 		<result property="code04_vl" column="code04_vl"/>
 	</resultMap>
-	
+
  	<select id="category" resultMap="Category">
 	<![CDATA[
 		select l1.code01_vl, l1.code01, l2.code02_vl, l2.code02, l3.code03_vl, l3.code03, l4.code04_vl, l4.code04
@@ -24,7 +24,7 @@
 	]]>
 	</select>
 
-	<!-- 개별 카테고리 검색의 경우 
+	<!-- 개별 카테고리 검색의 경우
 	<select id="autoLevel1" resultMap="level1Result">
 	<![CDATA[
 		select code01, code01_vl
@@ -39,14 +39,14 @@
 		where code01=#{code01}
 	]]>
 	</select>
-	
+
 	<select id="autoLevel3" resultMap="autoConnect">
 	<![CDATA[
 		select code03
 		From level3
-		where code01=#{code01} and code02=#{code02} 
+		where code01=#{code01} and code02=#{code02}
 	</select>
-	
+
 	<select id="autoLevel4" resultMap="autoConnect">
 	<![CDATA[
 		select code04
@@ -72,7 +72,7 @@
 
 	<update id="editShoppingList" parameterType="com.sharp.ing.domain.ItemDTO">
 		<![CDATA[
-			UPDATE shopping_list 
+			UPDATE shopping_list
 			SET purchase_date=#{purchase_date}
 			where list_id=#{list_id} and user_id=#{user_id}
 		]]>
@@ -80,8 +80,8 @@
 
 	<update id="editItem" parameterType="com.sharp.ing.domain.ItemDTO">
 		<![CDATA[
-			UPDATE item 
-			SET mart_code=#{mart_code}, price=#{price}, amount=#{amount}, 
+			UPDATE item
+			SET mart_code=#{mart_code}, price=#{price}, amount=#{amount},
 				code01=#{code01}, code02=#{code02}, code03=#{code03}, code04=#{code04}, qt_code=#{qt_code}, qt=#{qt}
 			where list_id=#{list_id} and item_no=#{item_no}
 		]]>

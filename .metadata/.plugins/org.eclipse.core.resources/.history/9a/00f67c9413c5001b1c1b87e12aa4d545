@@ -1,0 +1,5 @@
+package com.sharp.ing.domain;
+
+public class DataDAO {
+
+}

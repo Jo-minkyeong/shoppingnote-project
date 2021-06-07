@@ -158,5 +158,7 @@ public class DataController {
 		service.DeleteItem(item_no);
 		return "index";
 	}
+	
+	
 
 }

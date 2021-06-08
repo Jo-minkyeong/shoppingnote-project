@@ -17,7 +17,7 @@ import com.sharp.ing.domain.CategoryDTO;
 import com.sharp.ing.domain.Shopping_listDTO;
 import com.sharp.ing.service.DataService;
 
-@RestController
+//@RestController
 @Controller
 public class DataController {
 
@@ -49,6 +49,12 @@ public class DataController {
 //		logger.debug("=========================getLevel1=========================");
 //		return level1List;
 //	}
+	
+	@RequestMapping("/react")
+	public String Test() {
+		System.out.println(" =============================react=============================== ");
+		return "index";
+	}
 
 	@ResponseBody
 	@RequestMapping("/category")

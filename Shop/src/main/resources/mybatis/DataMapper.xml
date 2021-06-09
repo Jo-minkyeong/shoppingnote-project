@@ -3,18 +3,19 @@
 <!-- namespace를 통해 DataDAO와 연결 -->
 <mapper namespace="com.sharp.ing.domain.DataDAO">
 
+	<!--resultMap 은 DB 에서 넘어오는 컬럼의 이름과 java 의 bean 이름이 다를 때 mapping 시켜주는 것-->
 	<resultMap id="Category" type="com.sharp.ing.domain.CategoryDTO">
-		<result property="code01" column="code01"/>
-		<result property="code01_vl" column="code01_vl"/>
-		<result property="code02" column="code02"/>
-		<result property="code02_vl" column="code02_vl"/>
-		<result property="code03" column="code03"/>
-		<result property="code03_vl" column="code03_vl"/>
-		<result property="code04" column="code04"/>
-		<result property="code04_vl" column="code04_vl"/>
+		<result property="code01" column="code01" />
+		<result property="code01_vl" column="code01_vl" />
+		<result property="code02" column="code02" />
+		<result property="code02_vl" column="code02_vl" />
+		<result property="code03" column="code03" />
+		<result property="code03_vl" column="code03_vl" />
+		<result property="code04" column="code04" />
+		<result property="code04_vl" column="code04_vl" />
 	</resultMap>
 
- 	<select id="category" resultMap="Category">
+	<select id="category" resultMap="Category">
 	<![CDATA[
 		select l1.code01_vl, l1.code01, l2.code02_vl, l2.code02, l3.code03_vl, l3.code03, l4.code04_vl, l4.code04
 		From level1 l1 join level2 l2 ON  l1.code01=l2.code01
@@ -24,37 +25,14 @@
 	]]>
 	</select>
 
-	<!-- 개별 카테고리 검색의 경우
-	<select id="autoLevel1" resultMap="level1Result">
-	<![CDATA[
-		select code01, code01_vl
-		From level1
-	]]>
-	</select>
-
-	<select id="autoLevel2" resultMap="autoConnect" >
-	<![CDATA[
-		select code02, code02_vl
-		From level2
-		where code01=#{code01}
-	]]>
-	</select>
-
-	<select id="autoLevel3" resultMap="autoConnect">
-	<![CDATA[
-		select code03
-		From level3
-		where code01=#{code01} and code02=#{code02}
-	</select>
-
-	<select id="autoLevel4" resultMap="autoConnect">
-	<![CDATA[
-		select code04
-		From level4
-		where code01=#{code01} and code02=#{code02} and code03=#{code03}
-	]]>
-	</select>
- 	-->
+	<!-- 개별 카테고리 검색의 경우 <select id="autoLevel1" resultMap="level1Result"> <![CDATA[ 
+		select code01, code01_vl From level1 ]]> </select> <select id="autoLevel2" 
+		resultMap="autoConnect" > <![CDATA[ select code02, code02_vl From level2 
+		where code01=#{code01} ]]> </select> <select id="autoLevel3" resultMap="autoConnect"> 
+		<![CDATA[ select code03 From level3 where code01=#{code01} and code02=#{code02} 
+		</select> <select id="autoLevel4" resultMap="autoConnect"> <![CDATA[ select 
+		code04 From level4 where code01=#{code01} and code02=#{code02} and code03=#{code03} 
+		]]> </select> -->
 	<insert id="insertShoppinglist" parameterType="com.sharp.ing.domain.Shopping_listDTO">
 		<![CDATA[
 		INSERT INTO shopping_list VALUES
@@ -78,7 +56,8 @@
 		]]>
 	</update>
 
-	<update id="editItem" parameterType="com.sharp.ing.domain.ItemDTO">
+	<update id="editItem"
+		parameterType="com.sharp.ing.domain.ItemDTO">
 		<![CDATA[
 			UPDATE item
 			SET mart_code=#{mart_code}, price=#{price}, amount=#{amount},
@@ -104,7 +83,19 @@
 		delete from item where item_no = #{item_no}
 		]]>
 	</delete>
+
+	<resultMap id="Calendar" type="com.sharp.ing.domain.AverageDTO">
+		<result property="price" column="price"/>
+		<result property="user_id " column="user_id"/>
+		<result property="purchase_date " column="purchase_date"/>
+	</resultMap>
 	
-	
+	<select id="calendar" resultMap="Calendar">
+	<![CDATA[  
+	select sum(i.price)/count(distinct s.user_id)
+	from shopping_list s, item i
+	where s.list_id = i.list_id and purchase_date >= date_add(now(), interval -1 month) and NOW();
+	]]>
+	</select>
 
 </mapper>

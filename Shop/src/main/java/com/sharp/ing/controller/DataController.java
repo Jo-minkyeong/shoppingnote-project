@@ -5,20 +5,18 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sharp.ing.domain.ItemDTO;
+import com.sharp.ing.domain.AverageDTO;
 import com.sharp.ing.domain.CategoryDTO;
+import com.sharp.ing.domain.ItemDTO;
 import com.sharp.ing.domain.Shopping_listDTO;
 import com.sharp.ing.service.DataService;
 
-//@RestController
-@Controller
+@RestController
 public class DataController {
 
 	// 필드
@@ -29,6 +27,7 @@ public class DataController {
 
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
 
+	List<AverageDTO> listAverage;
 	List<CategoryDTO> listCategory;
 
 	// 생성자
@@ -39,7 +38,7 @@ public class DataController {
 		this.service = service;
 	}
 
-	//level1
+	// level1
 //	@ResponseBody
 //	@RequestMapping("/level1")
 //	public List<CategoryDTO> getLevel1(Model model) throws Exception {
@@ -49,25 +48,30 @@ public class DataController {
 //		logger.debug("=========================getLevel1=========================");
 //		return level1List;
 //	}
-	
-	@RequestMapping("/react")
-	public String Test() {
-		System.out.println(" =============================react=============================== ");
-		return "index";
-	}
 
-	@ResponseBody
+
 	@RequestMapping("/category")
-	public List<CategoryDTO> Category(Model model) throws Exception {
+	public String Category(Model model) throws Exception {
 
-		listCategory=service.Category();
+		listCategory = service.Category();
 		model.addAttribute("category", listCategory);
 		logger.debug("=========================getLevel1=========================");
-		return listCategory;
+		return "index.html";
 	}
 
+//  실제 listCategory로 받아와서 실행 시켜볼때 하는 방법
+//	@RequestMapping("/category")
+//	public List<CategoryDTO> Category(Model model) throws Exception {
+//
+//		listCategory=service.Category();
+//		model.addAttribute("category", listCategory);
+//		logger.debug("=========================getLevel1=========================");
+//		return listCategory;
+//	}
+
 	// 리스트 생성
-	// RequestMapping = 요청에 대해 어떤 Controller, 어떤 메소드가 처리할지를 맵핑하기 위한 어노테이션(브라우저에 접속할때 붙여줌)
+	// RequestMapping = 요청에 대해 어떤 Controller, 어떤 메소드가 처리할지를 맵핑하기 위한 어노테이션(브라우저에 접속할때
+	// 붙여줌)
 	@RequestMapping("/shoppinglist")
 	public String Shoppinglist(@RequestParam(value = "user_id") String user_id,
 			@RequestParam(value = "list_id") int list_id, @RequestParam(value = "Purchase_date") String purchase_date)
@@ -81,7 +85,7 @@ public class DataController {
 		service.Shoppinglist(listDTO);
 
 		// view로 띄울 jsp 이름
-		return "index";
+		return "index.html";
 	}
 
 	// 물품 등록
@@ -105,7 +109,7 @@ public class DataController {
 		itemDTO.setQt(qt);
 		itemDTO.setQt_code(qt_code);
 		service.Item(itemDTO);
-		return "index";
+		return "index.html";
 	}
 
 	// 리스트 수정
@@ -122,7 +126,7 @@ public class DataController {
 		service.EditShoppinglist(listDTO);
 
 		// view로 띄울 jsp 이름
-		return "index";
+		return "index.html";
 	}
 
 	// 물품 수정
@@ -146,7 +150,7 @@ public class DataController {
 		itemDTO.setQt(qt);
 		itemDTO.setQt_code(qt_code);
 		service.EditItem(itemDTO);
-		return "index";
+		return "index.html";
 	}
 
 	// 리스트 삭제
@@ -154,7 +158,7 @@ public class DataController {
 	public String DeleteList(@RequestParam(value = "list_id") int list_id) throws Exception {
 		logger.debug("=========================DeleteList=========================");
 		service.DeleteList(list_id);
-		return "index";
+		return "index.html";
 	}
 
 	// 물품 삭제
@@ -162,9 +166,16 @@ public class DataController {
 	public String DeleteItem(@RequestParam(value = "item_no") int item_no) throws Exception {
 		logger.debug("=========================DeleteItem=========================");
 		service.DeleteItem(item_no);
-		return "index";
+		return "index.html";
 	}
 	
-	
+	// 날짜 조회
+	@RequestMapping(value = "/calendar")
+	public List<AverageDTO> Calendar(Model model) throws Exception {
+		listAverage = service.Calendar();
+		model.addAttribute("calendar", listAverage);
+		logger.debug("=========================Calendar=========================");
+		return listAverage;
+	}
 
 }

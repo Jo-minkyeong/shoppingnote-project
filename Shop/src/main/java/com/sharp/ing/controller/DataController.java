@@ -1,5 +1,6 @@
 package com.sharp.ing.controller;
 
+import java.security.Provider.Service;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,10 +25,12 @@ public class DataController {
 	private Shopping_listDTO listDTO;
 	private ItemDTO itemDTO;
 	private DataService service;
-
+	private int TotalAverage;
+	private int UserAverage;
+	
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
 
-	List<AverageDTO> listAverage;
+//	List<AverageDTO> listTotal;
 	List<CategoryDTO> listCategory;
 
 	// 생성자
@@ -49,7 +52,7 @@ public class DataController {
 //		return level1List;
 //	}
 
-
+	// 카데고리 코드 조회
 	@RequestMapping("/category")
 	public String Category(Model model) throws Exception {
 
@@ -169,13 +172,31 @@ public class DataController {
 		return "index.html";
 	}
 	
-	// 날짜 조회
-	@RequestMapping(value = "/calendar")
-	public List<AverageDTO> Calendar(Model model) throws Exception {
-		listAverage = service.Calendar();
-		model.addAttribute("calendar", listAverage);
+	// 전체 소비 평균 값
+//	@RequestMapping(value = "/calendar")
+//	public List<AverageDTO> Calendar(Model model) throws Exception {
+//		listAverage = service.Calendar();
+//		model.addAttribute("calendar", listAverage);
+//		logger.debug("=========================Calendar=========================");
+//		return listAverage;
+//	}
+	
+	// 전체 소비 평균 값
+	@RequestMapping(value = "/TotalAverage")
+	public int TotalAverage(Model model) throws Exception {
+		TotalAverage = service.TotalAverage();
+		model.addAttribute("TotalAverage", TotalAverage);
 		logger.debug("=========================Calendar=========================");
-		return listAverage;
+		return TotalAverage;
+		}
+	
+	// 사용자 소비 평균 값
+	@RequestMapping(value = "/UserAverage")
+	public int userAverage(@RequestParam(value = "user_id") String user_id, Model model)throws Exception{
+		service.UserAverage(user_id);
+		UserAverage = service.UserAverage(user_id);
+		model.addAttribute("UserAverage", UserAverage);
+		return UserAverage;
 	}
-
+	
 }

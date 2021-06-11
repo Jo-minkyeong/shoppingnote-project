@@ -45,7 +45,7 @@ public interface DataDAO {
 	
 	// 전체 소비 평균 값
 //	public List<AverageDTO> totalAverage() throws Exception;
-	public List<AverageDTO> totalAverage() throws Exception;
+	public int totalAverage() throws Exception;
 	
 	// 사용자 소비 평균 값
 	public List<AverageDTO> userAverage(String user_id) throws Exception;

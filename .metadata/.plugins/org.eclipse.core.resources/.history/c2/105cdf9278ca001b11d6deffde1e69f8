@@ -71,14 +71,14 @@ public class DataService {
 //	}
 	
 	// 전체 소비 평균 값
-	public List<AverageDTO> TotalAverage() throws Exception {
-		List<AverageDTO> totalAverage = dataDAO.totalAverage(); 
+	public int TotalAverage() throws Exception {
+		int totalAverage = dataDAO.totalAverage(); 
 		return totalAverage; 
 	}
 
 	// 사용자 소비 평균 값
-	public List<AverageDTO> UserAverage(String user_id) throws Exception {
-		List<AverageDTO> userAverage = dataDAO.userAverage(user_id); 
+	public int UserAverage(String user_id) throws Exception {
+		int userAverage = dataDAO.userAverage(user_id); 
 		return userAverage; 
 	}
 	

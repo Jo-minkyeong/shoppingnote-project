@@ -184,7 +184,7 @@ public class DataController {
 	
 	// 전체 소비 평균 값
 	@RequestMapping(value = "/TotalAverage")
-	public List<AverageDTO> totalAverage(Model model) throws Exception {
+	public int List<AverageDTO>(Model model) throws Exception {
 		listTotalAverage = service.TotalAverage();
 		model.addAttribute("TotalAverage", listTotalAverage);
 		logger.debug("=========================Calendar=========================");

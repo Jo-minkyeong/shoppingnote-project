@@ -1,0 +1,66 @@
+package com.sharp.ing.domain;
+
+public class CategoryAvgDTO {
+
+	private String code02_vl;
+	private int code02;
+	
+	public int list_id;
+	
+	public String purchase_date;
+	
+	public int price;
+	
+	private String user_id;
+
+	
+	public String getCode02_vl() {
+		return code02_vl;
+	}
+
+	public void setCode02_vl(String code02_vl) {
+		this.code02_vl = code02_vl;
+	}
+
+	public int getCode02() {
+		return code02;
+	}
+
+	public void setCode02(int code02) {
+		this.code02 = code02;
+	}
+
+	public int getList_id() {
+		return list_id;
+	}
+
+	public void setList_id(int list_id) {
+		this.list_id = list_id;
+	}
+
+	public String getPurchase_date() {
+		return purchase_date;
+	}
+
+	public void setPurchase_date(String purchase_date) {
+		this.purchase_date = purchase_date;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	
+	
+}

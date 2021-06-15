@@ -1,8 +1,8 @@
 package com.sharp.ing.controller;
 
-import java.security.Provider.Service;
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sharp.ing.domain.AverageDTO;
+import com.sharp.ing.domain.CategoryAvgDTO;
 import com.sharp.ing.domain.CategoryDTO;
 import com.sharp.ing.domain.ItemDTO;
 import com.sharp.ing.domain.Shopping_listDTO;
@@ -25,14 +25,17 @@ public class DataController {
 	private Shopping_listDTO listDTO;
 	private ItemDTO itemDTO;
 	private DataService service;
-//	private int TotalAverage;
-//	private int UserAverage;
 	
-	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
-
-	List<AverageDTO> listUserAverage;
-	List<AverageDTO> listTotalAverage;
+	List<Shopping_listDTO> average;
 	List<CategoryDTO> listCategory;
+	List<CategoryAvgDTO> listAvgCategory;
+	List<CategoryAvgDTO> listAvgCategory6;
+	List<CategoryAvgDTO> listAvgCategory12;
+
+	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
+	
+	JSONObject jsonObject = new JSONObject();
+	JSONObject data = new JSONObject();
 
 	// 생성자
 	@Autowired
@@ -54,28 +57,27 @@ public class DataController {
 //	}
 
 	// 카데고리 코드 조회
-	@RequestMapping("/category")
-	public String Category(Model model) throws Exception {
-
-		listCategory = service.Category();
-		model.addAttribute("category", listCategory);
-		logger.debug("=========================getLevel1=========================");
-		return "index.html";
-	}
-
-//  실제 listCategory로 받아와서 실행 시켜볼때 하는 방법
 //	@RequestMapping("/category")
-//	public List<CategoryDTO> Category(Model model) throws Exception {
+//	public String Category(Model model) throws Exception {
 //
-//		listCategory=service.Category();
+//		listCategory = service.Category();
 //		model.addAttribute("category", listCategory);
 //		logger.debug("=========================getLevel1=========================");
-//		return listCategory;
+//		return "index.html";
 //	}
 
+	// 실제 listCategory로 받아와서 실행 시켜볼때 하는 방법
+	@RequestMapping("/category")
+	public List<CategoryDTO> Category(Model model) throws Exception {
+
+		listCategory=service.Category();
+		model.addAttribute("category", listCategory);
+		logger.debug("=========================getCategory=========================");
+		return listCategory;
+	}
+
 	// 리스트 생성
-	// RequestMapping = 요청에 대해 어떤 Controller, 어떤 메소드가 처리할지를 맵핑하기 위한 어노테이션(브라우저에 접속할때
-	// 붙여줌)
+	// RequestMapping = 요청에 대해 어떤 Controller, 어떤 메소드가 처리할지를 맵핑하기 위한 어노테이션(브라우저에 접속할때 붙여줌)
 	@RequestMapping("/shoppinglist")
 	public String Shoppinglist(@RequestParam(value = "user_id") String user_id,
 			@RequestParam(value = "list_id") int list_id, @RequestParam(value = "Purchase_date") String purchase_date)
@@ -126,10 +128,8 @@ public class DataController {
 		listDTO.setList_id(list_id);
 		logger.debug("=========================EditShoppinglist=========================");
 
-		// service로 보내줌
 		service.EditShoppinglist(listDTO);
-
-		// view로 띄울 jsp 이름
+		
 		return "index.html";
 	}
 
@@ -174,30 +174,55 @@ public class DataController {
 	}
 	
 	// 전체 소비 평균 값
-//	@RequestMapping(value = "/calendar")
-//	public List<AverageDTO> Calendar(Model model) throws Exception {
-//		listAverage = service.Calendar();
-//		model.addAttribute("calendar", listAverage);
-//		logger.debug("=========================Calendar=========================");
-//		return listAverage;
-//	}
-	
-	// 전체 소비 평균 값
-	@RequestMapping(value = "/TotalAverage")
-	public List<AverageDTO> totalAverage(Model model) throws Exception {
-		listTotalAverage = service.TotalAverage();
-		model.addAttribute("TotalAverage", listTotalAverage);
-		logger.debug("=========================Calendar=========================");
-		return listTotalAverage;
+	@RequestMapping(value = "/totalAverage")
+	public JSONObject TotalAvg(Model model) throws Exception {
+		average = service.TotalAvg();
+		model.addAttribute("TotalAverage", average);
+		data.put("key", average);
+		logger.debug("=========================totalAverage=========================");
+		return data;
 		}
 	
 	// 사용자 소비 평균 값
-	@RequestMapping(value = "/UserAverage")
-	public List<AverageDTO> userAverage(@RequestParam(value = "user_id") String user_id, Model model)throws Exception{
-		service.UserAverage(user_id);
-		listUserAverage = service.UserAverage(user_id);
-		model.addAttribute("UserAverage", listUserAverage);
-		return listUserAverage;
+//	@RequestMapping(value = "/userAverage")
+//	public List<AverageDTO> userAverage(@RequestParam(value = "user_id") String user_id, Model model)throws Exception{
+//		
+//		service.UserAverage(user_id);
+//		listUserAverage = service.UserAverage(user_id);
+//		model.addAttribute("UserAverage", listUserAverage);
+//		return listUserAverage;
+//	}
+	
+	// 사용자 소비 평균 값
+	@RequestMapping(value = "/userAverage")
+	public JSONObject UserAvg(@RequestParam(value = "user_id") String user_id, Model model)throws Exception{
+		service.UserAvg(user_id);
+		average = service.UserAvg(user_id);
+		model.addAttribute("UserAverage", average);
+		data.put("key", average);
+		logger.debug("=========================userAverage=========================");
+		
+		return data;
+	}
+
+	// 카테고리별 통계
+	@RequestMapping(value = "/categoryAverage")
+	public JSONObject CategoryAvg(@RequestParam(value = "user_id") String user_id, Model model) throws Exception{
+		service.CategoryAvg(user_id);
+		service.CategoryAvg6(user_id);
+		service.CategoryAvg12(user_id);
+		listAvgCategory =service.CategoryAvg(user_id);
+		listAvgCategory6 =service.CategoryAvg6(user_id);
+		listAvgCategory12 =service.CategoryAvg12(user_id);
+		model.addAttribute("CategoryAverage", listAvgCategory);
+		model.addAttribute("CategoryAverage", listAvgCategory6);
+		model.addAttribute("CategoryAverage", listAvgCategory12);
+		data.put("CategoryAverage3",listAvgCategory);
+		data.put("CategoryAverage6",listAvgCategory6);
+		data.put("CategoryAverage12",listAvgCategory12);
+		logger.debug("=========================categoryAverage=========================");
+		
+		return data;
 	}
 	
 }

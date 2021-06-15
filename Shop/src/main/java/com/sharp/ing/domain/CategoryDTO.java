@@ -17,6 +17,7 @@ public class CategoryDTO {
 	private String code04_vl;
 	private int code04;
 
+
 	public String getCode01_vl() {
 		return code01_vl;
 	}

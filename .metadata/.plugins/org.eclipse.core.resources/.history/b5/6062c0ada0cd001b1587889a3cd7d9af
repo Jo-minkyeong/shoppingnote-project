@@ -1,0 +1,19 @@
+package com.sharp.ing.domain;
+
+public class CategoryAvgDTO {
+
+	private String code02_vl;
+	private int code02;
+	
+	public int list_id;
+	
+	public String purchase_date;
+	
+	public int price;
+	
+	private String user_id;
+
+	
+	
+	
+}

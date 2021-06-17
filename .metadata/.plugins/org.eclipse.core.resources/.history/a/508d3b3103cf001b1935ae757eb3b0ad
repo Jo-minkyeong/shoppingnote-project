@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace를 통해 CompareDAO와 연결 -->
+<mapper namespace="com.sharp.ing.domain.CompareDAO">
+
+
+	<resultMap id="Compare" type="com.sharp.ing.domain.CompareDTO">
+	</resultMap>
+
+	<select id="compare" resultMap="Compare">
+	<![CDATA[
+	select distinct l4.code04_vl, i.qt, i.qt_code, s.purchase_date, m.mart_name, i.amount, i.price
+	from item i, shopping_list s, level4 l4, mart m
+	where  l4.code04_vl = #{code04_vl} and s.purchase_date >= DATE_ADD(now(), interval -14 day) and s.list_id=i.list_id and i.code04 = l4.code04 and i.mart_code = m.mart_code
+	order by price;
+	]]>
+	</select>
+
+</mapper>

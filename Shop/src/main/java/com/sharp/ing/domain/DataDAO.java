@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository("dataDAO")
 public interface DataDAO {
-	Logger logger = LoggerFactory.getLogger("controller.BoardController");
+	Logger logger = LoggerFactory.getLogger("com.sharp.ing.domain.DataDAO");
 
 	//code01
 //	public List<CategoryDTO> autoLevel1() throws Exception;
@@ -41,21 +41,6 @@ public interface DataDAO {
 	public void deleteItemList(int list_id) throws Exception;
 
 	// 물품 삭제
-	public void deleteItem(int item_no) throws Exception;
-	
-	// 전체 소비 평균 값
-	public List<Shopping_listDTO> totalAvg() throws Exception;
-	
-	// 사용자 소비 평균 값
-	public List<Shopping_listDTO> userAvg(String user_id) throws Exception;
-
-	//카테고리별 통계
-	public List<CategoryAvgDTO> categoryAvg(String user_id) throws Exception;
-	
-	//카테고리별 6개월 통계
-	public List<CategoryAvgDTO> categoryAvg6(String user_id) throws Exception;
-	
-	//카테고리별 12개월 통계
-	public List<CategoryAvgDTO> categoryAvg12(String user_id) throws Exception;
+	public void deleteItem(int list_id ,int item_no) throws Exception;
 	
 }

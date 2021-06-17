@@ -12,7 +12,7 @@ import com.sharp.ing.domain.DataDAO;
 import com.sharp.ing.domain.ItemDTO;
 import com.sharp.ing.domain.Shopping_listDTO;
 
-@Service("service")
+@Service("DataService")
 public class DataService {
 
 	private DataDAO dataDAO;
@@ -59,38 +59,9 @@ public class DataService {
 	}
 	
 	// 물품 삭제
-	public void DeleteItem(int item_no) throws Exception {
-		dataDAO.deleteItem(item_no);
-	}
-
-	// 전체 소비 평균 값
-	public List<Shopping_listDTO> TotalAvg() throws Exception {
-		List<Shopping_listDTO> totalAvg = dataDAO.totalAvg(); 
-		return totalAvg; 
-	}
-
-	// 사용자 소비 평균 값
-	public List<Shopping_listDTO> UserAvg(String user_id) throws Exception {
-		List<Shopping_listDTO> userAverage = dataDAO.userAvg(user_id); 
-		return userAverage; 
+	public void DeleteItem(int list_id, int item_no) throws Exception {
+		dataDAO.deleteItem(list_id, item_no);
 	}
 	
-	// 카테고리별 통계
-	public List<CategoryAvgDTO> CategoryAvg(String user_id) throws Exception {
-		List<CategoryAvgDTO> categoryAvg = dataDAO.categoryAvg(user_id);
-		return categoryAvg;
-	}
-	
-	// 카테고리별 6개월 통계
-	public List<CategoryAvgDTO> CategoryAvg6(String user_id) throws Exception {
-		List<CategoryAvgDTO> categoryAvg6 = dataDAO.categoryAvg6(user_id);
-		return categoryAvg6;
-	}
-	
-	// 카테고리별 12개월 통계
-	public List<CategoryAvgDTO> CategoryAvg12(String user_id) throws Exception {
-		List<CategoryAvgDTO> categoryAvg12 = dataDAO.categoryAvg12(user_id);
-		return categoryAvg12;
-	}
 	
 }

@@ -1,0 +1,26 @@
+package com.sharp.ing.domain;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public interface StatisticsDAO {
+	
+	Logger logger = LoggerFactory.getLogger("controller.BoardController");
+	
+	// 전체 소비 평균 값
+	public List<Shopping_listDTO> totalAvg() throws Exception;
+	
+	// 사용자 소비 평균 값
+	public List<Shopping_listDTO> userAvg(String user_id) throws Exception;
+
+	//카테고리별 통계
+	public List<CategoryAvgDTO> categoryAvg(String user_id) throws Exception;
+	
+	//카테고리별 6개월 통계
+	public List<CategoryAvgDTO> categoryAvg6(String user_id) throws Exception;
+	
+	//카테고리별 12개월 통계
+	public List<CategoryAvgDTO> categoryAvg12(String user_id) throws Exception;
+}

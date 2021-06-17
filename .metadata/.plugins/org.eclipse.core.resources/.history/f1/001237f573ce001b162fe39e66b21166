@@ -1,0 +1,32 @@
+package com.sharp.ing.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sharp.ing.domain.CompareDTO;
+import com.sharp.ing.service.CompareService;
+
+@RestController
+public class CompareController {
+	
+	//필드
+	private CompareService service;
+	
+	List<CompareDTO> compare;
+	
+	//생성자
+	@Autowired
+	public CompareController(CompareService service) {
+		this.service = service;
+	}
+	
+	public List<CompareDTO> Compare(@RequestParam(value="code04_vl") String code04_vl,Model model) throws Exception {
+		
+		return compare;
+	}
+	
+}

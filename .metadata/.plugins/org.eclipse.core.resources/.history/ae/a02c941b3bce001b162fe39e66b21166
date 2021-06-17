@@ -1,0 +1,90 @@
+package com.sharp.ing.controller;
+
+import java.util.List;
+
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.sharp.ing.domain.CategoryAvgDTO;
+import com.sharp.ing.domain.Shopping_listDTO;
+import com.sharp.ing.service.StatisticsService;
+
+public class StatisticsController {
+
+	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.StatisticsController");
+	
+	private StatisticsService service;
+	
+	List<Shopping_listDTO> average;
+	List<CategoryAvgDTO> listAvgCategory3;
+	List<CategoryAvgDTO> listAvgCategory6;
+	List<CategoryAvgDTO> listAvgCategory12;
+
+	JSONObject jsonObject = new JSONObject();
+	JSONObject data = new JSONObject();
+
+	//생성자
+	@Autowired
+	public StatisticsController(StatisticsService service) {
+		this.service = service;
+	}
+
+	// 전체 소비 평균 값
+	@RequestMapping(value = "/totalAverage")
+	public JSONObject TotalAvg(Model model) throws Exception {
+		average = service.TotalAvg();
+		model.addAttribute("TotalAverage", average);
+		data.put("key", average);
+		logger.debug("=========================totalAverage=========================");
+		return data;
+	}
+
+	// 사용자 소비 평균 값
+	@RequestMapping(value = "/userAverage")
+	public JSONObject UserAvg(@RequestParam(value = "user_id") String user_id, Model model) throws Exception {
+		service.UserAvg(user_id);
+		average = service.UserAvg(user_id);
+		model.addAttribute("UserAverage", average);
+		data.put("key", average);
+		logger.debug("=========================userAverage=========================");
+
+		return data;
+	}
+
+	// 사용자 소비 평균 값
+//	@RequestMapping(value = "/userAverage")
+//	public List<AverageDTO> userAverage(@RequestParam(value = "user_id") String user_id, Model model)throws Exception{
+//		
+//		service.UserAverage(user_id);
+//		listUserAverage = service.UserAverage(user_id);
+//		model.addAttribute("UserAverage", listUserAverage);
+//		return listUserAverage;
+//	}
+	
+	
+	// 카테고리별 통계
+	@RequestMapping(value = "/categoryAverage")
+	public JSONObject CategoryAvg(@RequestParam(value = "user_id") String user_id, Model model) throws Exception {
+		service.CategoryAvg3(user_id);
+		service.CategoryAvg6(user_id);
+		service.CategoryAvg12(user_id);
+		listAvgCategory3 = service.CategoryAvg3(user_id);
+		listAvgCategory6 = service.CategoryAvg6(user_id);
+		listAvgCategory12 = service.CategoryAvg12(user_id);
+		model.addAttribute("CategoryAverage", listAvgCategory3);
+		model.addAttribute("CategoryAverage", listAvgCategory6);
+		model.addAttribute("CategoryAverage", listAvgCategory12);
+		data.put("CategoryAverage3", listAvgCategory3);
+		data.put("CategoryAverage6", listAvgCategory6);
+		data.put("CategoryAverage12", listAvgCategory12);
+		logger.debug("=========================categoryAverage=========================");
+
+		return data;
+	}
+
+}

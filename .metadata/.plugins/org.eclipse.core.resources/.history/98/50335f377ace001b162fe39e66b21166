@@ -1,0 +1,43 @@
+package com.sharp.ing.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sharp.ing.domain.CompareDTO;
+import com.sharp.ing.service.CompareService;
+
+@RestController
+public class CompareController {
+	
+	Logger logger = LoggerFactory.getLogger("com.sharp.ing.domain.CompareController");
+	
+	//필드
+	private CompareService service;
+	
+	List<CompareDTO> compare;
+	
+	//생성자
+	@Autowired
+	public CompareController(CompareService service) {
+		this.service = service;
+	}
+	
+	public List<CompareDTO> Compare(@RequestParam(value="code04_vl") String code04_vl,@RequestParam(value = "mart_code") String mart_code, 
+			@RequestParam(value = "price") int price, @RequestParam(value = "amount") int amount,@RequestParam(value = "code01") int code01, 
+			@RequestParam(value = "code02") int code02, @RequestParam(value = "code03") int code03, @RequestParam(value = "code04") int code04, 
+			@RequestParam(value = "qt") int qt, @RequestParam(value = "qt_code") String qt_code, Model model) throws Exception {
+		
+		service.Compare();
+		model.addAttribute(model);
+		
+		
+		return compare;
+	}
+	
+}

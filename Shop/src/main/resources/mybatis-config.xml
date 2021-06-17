@@ -3,5 +3,7 @@
 <configuration>
 	<mappers>
 		<mapper resource="mybatis/DataMapper.xml" />
+		<mapper resource="mybatis/StatisticsMapper.xml" />
+		<mapper resource="mybatis/CompareMapper.xml" />
 	</mappers>
 </configuration>

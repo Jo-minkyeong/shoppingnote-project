@@ -67,7 +67,7 @@
 		]]>
 	</update>
 
-	<delete id="deleteList" parameterType="int">
+<!-- 	<delete id="deleteList" parameterType="int">
 		<![CDATA[
 		delete from shopping_list where list_id = #{list_id}
 		]]>
@@ -77,7 +77,7 @@
 		<![CDATA[
 		delete from item where list_id = #{list_id}
 		]]>
-	</delete>
+	</delete> -->
 
 	<delete id="deleteItem" parameterType="int">
 		<![CDATA[

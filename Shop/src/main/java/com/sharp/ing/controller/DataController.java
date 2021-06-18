@@ -40,6 +40,7 @@ public class DataController {
 		this.itemDTO = itemDTO;
 		this.service = service;
 	}
+	
 
 	// level1
 //	@ResponseBody
@@ -153,12 +154,12 @@ public class DataController {
 	}
 
 	// 리스트 삭제
-	@RequestMapping(value = "/deletelist")
-	public String DeleteList(@RequestParam(value = "list_id") int list_id) throws Exception {
-		logger.debug("=========================DeleteList=========================");
-		service.DeleteList(list_id);
-		return "index.html";
-	}
+//	@RequestMapping(value = "/deletelist")
+//	public String DeleteList(@RequestParam(value = "list_id") int list_id) throws Exception {
+//		logger.debug("=========================DeleteList=========================");
+//		service.DeleteList(list_id);
+//		return "index.html";
+//	}
 
 	// 물품 삭제
 	@RequestMapping(value = "/deleteitem")

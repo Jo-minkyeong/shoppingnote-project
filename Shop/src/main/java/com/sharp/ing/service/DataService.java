@@ -52,11 +52,11 @@ public class DataService {
 
 	// 리스트 삭제
 	// transactional = 하나 지우고 안지워지면 rollback 시켜줌 (DeleteList, DeleteItem 연결)
-	@Transactional
-	public void DeleteList(int list_id) throws Exception {
-		dataDAO.deleteList(list_id);
-		dataDAO.deleteItemList(list_id);
-	}
+//	@Transactional
+//	public void DeleteList(int list_id) throws Exception {
+//		dataDAO.deleteList(list_id);
+//		dataDAO.deleteItemList(list_id);
+//	}
 	
 	// 물품 삭제
 	public void DeleteItem(int list_id, int item_no) throws Exception {

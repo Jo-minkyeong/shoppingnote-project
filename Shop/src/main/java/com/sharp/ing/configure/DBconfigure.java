@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
@@ -47,4 +48,10 @@ public class DBConfigure {
 	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
+	
+	/*
+	 * @Override public void addCorsMappings(CorsRegistry registry) {
+	 * registry.addMapping("/api/**").allowCredentials(true).allowedOrigins(
+	 * "http://localhost:3000"); }
+	 */
 }

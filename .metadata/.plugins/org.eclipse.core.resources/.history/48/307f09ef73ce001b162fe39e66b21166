@@ -1,8 +1,0 @@
-package com.sharp.ing.service;
-
-import org.springframework.stereotype.Service;
-
-@Service("CompareService")
-public class CompareService {
-
-}

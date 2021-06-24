@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sharp.ing.domain.CategoryAvgDTO;
 import com.sharp.ing.domain.CategoryDTO;
 import com.sharp.ing.domain.DataDAO;
 import com.sharp.ing.domain.ItemDTO;
+import com.sharp.ing.domain.ShoppingItemDTO;
 import com.sharp.ing.domain.Shopping_listDTO;
 
 @Service("DataService")
@@ -39,10 +39,16 @@ public class DataService {
 	public void Item(ItemDTO itemDTO) throws Exception {
 		dataDAO.insertItem(itemDTO);
 	}
-
+	
+	// 리스트, 물품 조회
+	public List<ShoppingItemDTO> ViewShoppingItem(String userId, int list_id) throws Exception{
+		List<ShoppingItemDTO> listShoppingItem = dataDAO.viewShoppingItem(userId, list_id);
+		return listShoppingItem;
+	}
+	
 	// 리스트 수정
 	public void EditShoppinglist(Shopping_listDTO listDTO) throws Exception {
-		dataDAO.editShoppingList(listDTO);
+		dataDAO.editShoppinglist(listDTO);
 	}
 
 	// 물품 수정

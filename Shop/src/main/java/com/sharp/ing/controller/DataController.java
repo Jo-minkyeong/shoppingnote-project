@@ -7,17 +7,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sharp.ing.domain.CategoryAvgDTO;
 import com.sharp.ing.domain.CategoryDTO;
 import com.sharp.ing.domain.ItemDTO;
+import com.sharp.ing.domain.ShoppingItemDTO;
 import com.sharp.ing.domain.Shopping_listDTO;
 import com.sharp.ing.service.DataService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5000")
 public class DataController {
 
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
@@ -29,6 +31,8 @@ public class DataController {
 	private DataService service;
 	
 	List<CategoryDTO> listCategory;
+	List<ShoppingItemDTO> listShoppingItem;
+	List<ItemDTO> listItem;
 
 	JSONObject jsonObject = new JSONObject();
 	JSONObject data = new JSONObject();
@@ -54,32 +58,32 @@ public class DataController {
 //	}
 
 	// 카데고리 코드 조회
-	@RequestMapping("/category")
-	public String Category(Model model) throws Exception {
-
-		listCategory = service.Category();
-		model.addAttribute("category", listCategory);
-		logger.debug("=========================getLevel1=========================");
-		return "index.html";
-	}
+//	@RequestMapping("/category")
+//	public String Category(Model model) throws Exception {
+//
+//		listCategory = service.Category();
+//		model.addAttribute("category", listCategory);
+//		logger.debug("=========================getLevel1=========================");
+//		return "index.html";
+//	}
 
 	// 실제 listCategory로 받아와서 실행 시켜볼때 하는 방법
-//	@RequestMapping("/category")
-//	public List<CategoryDTO> Category(Model model) throws Exception {
-//
-//		listCategory=service.Category();
-//		model.addAttribute("category", listCategory);
-//		logger.debug("=========================getCategory=========================");
-//		return listCategory;
-//	}
+	@RequestMapping("/category")
+	public List<CategoryDTO> Category(Model model) throws Exception {
+
+		listCategory=service.Category();
+		model.addAttribute("category", listCategory);
+		logger.debug("=========================getCategory=========================");
+		return listCategory;
+	}
 
 	// 리스트 생성
 	// RequestMapping = 요청에 대해 어떤 Controller, 어떤 메소드가 처리할지를 맵핑하기 위한 어노테이션(브라우저에 접속할때 붙여줌)
 	@RequestMapping("/shoppinglist")
-	public String Shoppinglist(@RequestParam(value = "user_id") String user_id,
-			@RequestParam(value = "list_id") int list_id, @RequestParam(value = "Purchase_date") String purchase_date)
-			throws Exception {
-		listDTO.setUser_id(user_id);
+	public String Shoppinglist(@RequestParam(value = "userId") String userId,
+			@RequestParam(value = "list_id", required=false) int list_id, @RequestParam(value = "Purchase_date", required=false) String purchase_date) throws Exception {
+		
+		listDTO.setuserId(userId);
 		listDTO.setPurchase_date(purchase_date);
 		listDTO.setList_id(list_id);
 		logger.debug("=========================Shoppinglist=========================");
@@ -87,7 +91,6 @@ public class DataController {
 		// service로 보내줌
 		service.Shoppinglist(listDTO);
 
-		// view로 띄울 jsp 이름
 		return "index.html";
 	}
 
@@ -115,12 +118,25 @@ public class DataController {
 		return "index.html";
 	}
 
+	// 리스트, 아이템 조회
+	@RequestMapping("/viewshoppingitem")
+	public List<ShoppingItemDTO> ViewShoppingItem(@RequestParam(value="userId") String userId, @RequestParam(required=false, value="list_id") Integer list_id )throws Exception{
+		
+		if(list_id != null) {
+			service.ViewShoppingItem(userId, list_id);
+			listShoppingItem = service.ViewShoppingItem(userId, list_id);
+			return listShoppingItem;
+		}else 
+			listShoppingItem = null;
+			return listShoppingItem;
+	}
+	
 	// 리스트 수정
 	@RequestMapping("/editshoppinglist")
-	public String EditShoppinglist(@RequestParam(value = "user_id") String user_id,
+	public String EditShoppinglist(@RequestParam(value = "userId") String userId,
 			@RequestParam(value = "list_id") int list_id, @RequestParam(value = "Purchase_date") String purchase_date)
 			throws Exception {
-		listDTO.setUser_id(user_id);
+		listDTO.setuserId(userId);
 		listDTO.setPurchase_date(purchase_date);
 		listDTO.setList_id(list_id);
 		logger.debug("=========================EditShoppinglist=========================");

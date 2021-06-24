@@ -38,7 +38,7 @@
 	<insert id="insertShoppinglist" parameterType="com.sharp.ing.domain.Shopping_listDTO">
 		<![CDATA[
 		INSERT INTO shopping_list VALUES
-		(#{list_id}, #{user_id}, #{purchase_date})
+		(#{list_id}, #{userId}, #{purchase_date})
 		]]>
 	</insert>
 
@@ -50,20 +50,31 @@
 		]]>
 	</insert>
 
-	<update id="editShoppingList" parameterType="com.sharp.ing.domain.ItemDTO">
+	<resultMap id="viewShoppingItem" type="com.sharp.ing.domain.ShoppingItemDTO">
+	</resultMap>
+
+	<select id="viewShoppingItem" resultMap= "viewShoppingItem">
 		<![CDATA[
-			UPDATE shopping_list
-			SET purchase_date=#{purchase_date}
-			where list_id=#{list_id} and user_id=#{user_id}
+		select s.purchase_date, l4.code04_vl, i.mart_code, i.price, i.amount, i.qt, i.qt_code
+		from shopping_list s, item i, level4 l4
+		where s.userId=#{userId} and i.list_id=#{list_id} and s.list_id=i.list_id and i.code04 = l4.code04;
+		]]>	
+	</select>
+
+	<update id="editShoppinglist" parameterType="com.sharp.ing.domain.ItemDTO">
+		<![CDATA[
+		UPDATE shopping_list
+		SET purchase_date=#{purchase_date}
+		where list_id=#{list_id} and userId=#{userId}
 		]]>
 	</update>
 
 	<update id="editItem" parameterType="com.sharp.ing.domain.ItemDTO">
 		<![CDATA[
-			UPDATE item
-			SET mart_code=#{mart_code}, price=#{price}, amount=#{amount},
-				code01=#{code01}, code02=#{code02}, code03=#{code03}, code04=#{code04}, qt_code=#{qt_code}, qt=#{qt}
-			where list_id=#{list_id} and item_no=#{item_no}
+		UPDATE item
+		SET mart_code=#{mart_code}, price=#{price}, amount=#{amount},
+		code01=#{code01}, code02=#{code02}, code03=#{code03}, code04=#{code04}, qt_code=#{qt_code}, qt=#{qt}
+		where list_id=#{list_id} and item_no=#{item_no}
 		]]>
 	</update>
 

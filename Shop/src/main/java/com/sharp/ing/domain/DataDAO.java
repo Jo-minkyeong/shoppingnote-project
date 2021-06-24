@@ -30,8 +30,11 @@ public interface DataDAO {
 	// 물품 등록
 	public void insertItem(ItemDTO itemDTO) throws Exception;
 	
+	// 리스트, 물품 조회 
+	public List<ShoppingItemDTO> viewShoppingItem(String userId, int list_id) throws Exception;
+	
 	// 리스트 수정
-	public void editShoppingList(Shopping_listDTO listDTO) throws Exception;
+	public void editShoppinglist(Shopping_listDTO listDTO) throws Exception;
 
 	// 물품 수정
 	public void editItem(ItemDTO itemDTO) throws Exception;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class Shopping_listDTO {
 	
 	// 사용자_id
-	private String user_id;
+	private String userId;
 	// 영수증 번호
 	public int list_id;
 	// 구매날짜
@@ -23,12 +23,12 @@ public class Shopping_listDTO {
 		this.list_id = list_id;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getuserId() {
+		return userId;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setuserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getPurchase_date() {

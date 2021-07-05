@@ -2,6 +2,8 @@ package com.sharp.ing.domain;
 
 public class ShoppingItemDTO {
 	
+	private int list_id;
+	private int item_no;
 	private String purchase_date;
 	private String code04_vl;
 	private String mart_code;
@@ -10,11 +12,23 @@ public class ShoppingItemDTO {
 	private String qt;
 	private String qt_code;
 	
-	
-	public String getpurchase_date() {
+
+	public int getList_id() {
+		return list_id;
+	}
+	public void setList_id(int list_id) {
+		this.list_id = list_id;
+	}
+	public int getItem_no() {
+		return item_no;
+	}
+	public void setItem_no(int item_no) {
+		this.item_no = item_no;
+	}
+	public String getPurchase_date() {
 		return purchase_date;
 	}
-	public void setpurchase_date(String purchase_date) {
+	public void setPurchase_date(String purchase_date) {
 		this.purchase_date = purchase_date;
 	}
 	public String getCode04_vl() {

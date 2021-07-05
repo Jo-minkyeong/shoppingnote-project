@@ -1,5 +1,7 @@
 package com.sharp.ing.domain;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -24,13 +26,23 @@ public interface DataDAO {
 	// 카데고리 코드 조회
 	public List<CategoryDTO> category() throws Exception;
 
-	// 리스트 생성
-	public void insertShoppinglist(Shopping_listDTO listDTO) throws Exception;
+//	// 리스트 생성
+//	public void insertShoppinglist(Shopping_listDTO listDTO) throws Exception;
 
 	// 물품 등록
-	public void insertItem(ItemDTO itemDTO) throws Exception;
+//	public void insertItem(ItemDTO itemDTO) throws Exception;
 	
-	// 리스트, 물품 조회 
+	// 리스트 생성
+	public void insertItemHead(Shopping_listDTO itemHead) throws Exception;
+	// 아이템 생성
+	public Integer selectListID() throws Exception;
+	public void insertItem(List<ItemDTO> item) throws Exception;
+	
+	// 리스트, 물품 전체조회 
+	public List<ShoppingItemDTO> viewTotalShoppingHeader(String userId) throws Exception;
+	public List<ShoppingItemDTO> viewTotalShoppingBody(String userId) throws Exception;	
+	
+	// 리스트, 물품 상세조회 
 	public List<ShoppingItemDTO> viewShoppingItem(String userId, int list_id) throws Exception;
 	
 	// 리스트 수정

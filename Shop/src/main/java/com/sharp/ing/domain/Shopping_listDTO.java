@@ -1,26 +1,31 @@
 package com.sharp.ing.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.sharp.ing.service.DataService;
 
 @Component("listDTO")
 public class Shopping_listDTO {
 	
-	// 사용자_id
+	// 사용자 번호 
+	private Integer id;
+	// 사용자 ID
 	private String userId;
 	// 영수증 번호
-	public int list_id;
+	public Integer list_id;
 	// 구매날짜
 	public String purchase_date;
 	// 가격 (Average에서 사용)
 	public int price;
 	
 
-	public int getList_id() {
-		return list_id;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setList_id(int list_id) {
-		this.list_id = list_id;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getuserId() {
@@ -31,6 +36,14 @@ public class Shopping_listDTO {
 		this.userId = userId;
 	}
 
+	public Integer getList_id() {
+		return list_id;
+	}
+
+	public void setList_id(Integer list_id) {
+		this.list_id = list_id;
+	}
+	
 	public String getPurchase_date() {
 		return purchase_date;
 	}

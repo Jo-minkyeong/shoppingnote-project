@@ -86,20 +86,15 @@ public class DataService {
 	}
 	
 	// 리스트 수정
-	public void EditShoppinglist(Shopping_listDTO listDTO) throws Exception {
-		dataDAO.editShoppinglist(listDTO);
+	public void EditItemHead(Shopping_listDTO editItemHead) throws Exception {
+		dataDAO.editShoppinglist(editItemHead);
 	}
 
 	// 물품 수정
-	public void EditItem(ItemDTO itemDTO) throws Exception {
-		dataDAO.editItem(itemDTO);
+	public void EditItem(List<ItemDTO> editItems) throws Exception {
+		dataDAO.editItem(editItems);
 	}
 	
-	
-	
-	
-	
-
 	// 리스트 삭제
 	// transactional = 하나 지우고 안지워지면 rollback 시켜줌 (DeleteList, DeleteItem 연결)
 //	@Transactional

@@ -103,7 +103,7 @@
 		]]>	
 	</select>
 
-	<update id="editShoppinglist" parameterType="com.sharp.ing.domain.ItemDTO">
+	<update id="editShoppinglist" parameterType="com.sharp.ing.domain.Shopping_listDTO">
 		<![CDATA[
 		UPDATE shopping_list
 		SET purchase_date=#{purchase_date}
@@ -112,12 +112,11 @@
 	</update>
 
 	<update id="editItem" parameterType="com.sharp.ing.domain.ItemDTO">
-		<![CDATA[
+		<foreach collection="list" item="item" separator=";">
 		UPDATE item
-		SET mart_code=#{mart_code}, price=#{price}, amount=#{amount},
-		code01=#{code01}, code02=#{code02}, code03=#{code03}, code04=#{code04}, qt_code=#{qt_code}, qt=#{qt}
-		where list_id=#{list_id} and item_no=#{item_no}
-		]]>
+		SET mart_code=#{item.mart_code}, price=#{item.price}, amount=#{item.amount}, code01=#{item.code01}, code02=#{item.code02}, code03=#{item.code03}, code04=#{item.code04}, qt_code=#{item.qt_code}, qt=#{item.qt}
+		where list_id=#{item.list_id} and item_no=#{item.item_no}
+		</foreach>
 	</update>
 
 <!-- 	<delete id="deleteList" parameterType="int">

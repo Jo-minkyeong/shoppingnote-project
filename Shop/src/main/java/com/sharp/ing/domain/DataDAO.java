@@ -45,11 +45,9 @@ public interface DataDAO {
 	// 리스트, 물품 상세조회 
 	public List<ShoppingItemDTO> viewShoppingItem(String userId, int list_id) throws Exception;
 	
-	// 리스트 수정
-	public void editShoppinglist(Shopping_listDTO listDTO) throws Exception;
-
-	// 물품 수정
-	public void editItem(ItemDTO itemDTO) throws Exception;
+	// 리스트, 물품 수정
+	public void editShoppinglist(Shopping_listDTO editItemHead) throws Exception;
+	public void editItem(List<ItemDTO> editItems) throws Exception;
 
 	// 리스트(영수증) 삭제
 //	public void deleteList(int list_id) throws Exception;

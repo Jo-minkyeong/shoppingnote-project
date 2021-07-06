@@ -47,7 +47,9 @@ public class DataController {
 
 	JSONObject TotalShopping = new JSONObject();
 	JSONObject data = new JSONObject();
-	JSONObject data2 = new JSONObject();
+	// 구글의 json paser 라이브러리
+	Gson gson = new Gson();
+	Gson gson2 = new Gson();
 
 	// 생성자
 	@Autowired
@@ -166,12 +168,12 @@ public class DataController {
 		service.ItemHead(itemHead);
 		
 		JsonElement body = jparser.parse(param.get("body").toString()); 
-		ItemDTO[] gsonItem = gson.fromJson(body.toString(), ItemDTO[].class);
+		ItemDTO[] Item = gson.fromJson(body.toString(), ItemDTO[].class);
 		
 		// asList => 배열을 리스트로 바꾸어줌/ java.util.Arrays.ArrayList (Arrays클래스의 메소드로
 		// ArrayList로 바꾸어줌, 사이즈 고정)/ java.util.ArrayList 클래스와는 다른 클래스
 //		List<ItemDTO> items = new ArrayList(Arrays.asList(gsonItem));
-		List<ItemDTO> items = Arrays.asList(gsonItem);
+		List<ItemDTO> items = Arrays.asList(Item);
 
 		service.Item(items);
 
@@ -217,44 +219,72 @@ public class DataController {
 		return listShoppingItem;
 
 	}
+	
+	
+	@RequestMapping(value = "/edititem", method = RequestMethod.POST, consumes = "application/json; charset=utf-8")
+	public @ResponseBody String EditItem(@RequestBody Map<String, Object> param) throws Exception {
+		logger.debug("param ======== " + param.toString());
+		
+		// jsonPaserPser 클래스 객체를 만들고 해당 객체에
+		JsonParser jparser = new JsonParser();
+
+		// param의 id 오브젝트 -> 문자열 파싱 -> jsonElement 파싱
+		JsonElement head = jparser.parse(param.get("head").toString());
+		
+		Shopping_listDTO itemHead = gson2.fromJson(head, Shopping_listDTO.class);
+//		ItemDTO gsonHead = gson.fromJson(head, ItemDTO.class);
+		service.EditItemHead(itemHead);
+		
+		JsonElement body = jparser.parse(param.get("body").toString());
+		ItemDTO[] Item = gson2.fromJson(body.toString(), ItemDTO[].class);
+		
+		// asList => 배열을 리스트로 바꾸어줌/ java.util.Arrays.ArrayList (Arrays클래스의 메소드로 ArrayList로 바꾸어줌, 사이즈 고정)/ java.util.ArrayList 클래스와는 다른 클래스
+//		List<ItemDTO> items = new ArrayList(Arrays.asList(gsonItem));
+		List<ItemDTO> items = Arrays.asList(Item);
+
+		service.EditItem(items);
+
+		return "success";
+	}
+
 
 	// 리스트 수정
-	@RequestMapping("/editshoppinglist")
-	public String EditShoppinglist(@RequestParam(value = "userId") String userId,
-			@RequestParam(value = "list_id") int list_id, @RequestParam(value = "Purchase_date") String purchase_date)
-			throws Exception {
-		listDTO.setuserId(userId);
-		listDTO.setPurchase_date(purchase_date);
-		listDTO.setList_id(list_id);
-		logger.debug("=========================EditShoppinglist=========================");
-
-		service.EditShoppinglist(listDTO);
-		return "index.html";
-	}
+//	@RequestMapping("/editshoppinglist")
+//	public String EditShoppinglist(@RequestParam(value = "userId") String userId,
+//			@RequestParam(value = "list_id") int list_id, @RequestParam(value = "Purchase_date") String purchase_date)
+//			throws Exception {
+//		listDTO.setuserId(userId);
+//		listDTO.setPurchase_date(purchase_date);
+//		listDTO.setList_id(list_id);
+//		logger.debug("=========================EditShoppinglist=========================");
+//
+//		service.EditShoppinglist(listDTO);
+//		return "index.html";
+//	}
 
 	// 물품 수정
-	@RequestMapping(value = "/edititem")
-	public String EditItem(@RequestParam(value = "item_no") int item_no, @RequestParam(value = "list_id") int list_id,
-			@RequestParam(value = "mart_code") String mart_code, @RequestParam(value = "price") int price,
-			@RequestParam(value = "amount") int amount, @RequestParam(value = "code01") int code01,
-			@RequestParam(value = "code02") int code02, @RequestParam(value = "code03") int code03,
-			@RequestParam(value = "code04") int code04, @RequestParam(value = "qt") int qt,
-			@RequestParam(value = "qt_code") String qt_code) throws Exception {
-		logger.debug("=========================EditItem=========================");
-		itemDTO.setItem_no(item_no);
-		itemDTO.setList_id(list_id);
-		itemDTO.setMart_code(mart_code);
-		itemDTO.setAmount(amount);
-		itemDTO.setCode01(code01);
-		itemDTO.setCode02(code02);
-		itemDTO.setCode03(code03);
-		itemDTO.setCode04(code04);
-		itemDTO.setPrice(price);
-		itemDTO.setQt(qt);
-		itemDTO.setQt_code(qt_code);
-		service.EditItem(itemDTO);
-		return "index.html";
-	}
+//	@RequestMapping(value = "/edititem")
+//	public String EditItem(@RequestParam(value = "item_no") int item_no, @RequestParam(value = "list_id") int list_id,
+//			@RequestParam(value = "mart_code") String mart_code, @RequestParam(value = "price") int price,
+//			@RequestParam(value = "amount") int amount, @RequestParam(value = "code01") int code01,
+//			@RequestParam(value = "code02") int code02, @RequestParam(value = "code03") int code03,
+//			@RequestParam(value = "code04") int code04, @RequestParam(value = "qt") int qt,
+//			@RequestParam(value = "qt_code") String qt_code) throws Exception {
+//		logger.debug("=========================EditItem=========================");
+//		itemDTO.setItem_no(item_no);
+//		itemDTO.setList_id(list_id);
+//		itemDTO.setMart_code(mart_code);
+//		itemDTO.setAmount(amount);
+//		itemDTO.setCode01(code01);
+//		itemDTO.setCode02(code02);
+//		itemDTO.setCode03(code03);
+//		itemDTO.setCode04(code04);
+//		itemDTO.setPrice(price);
+//		itemDTO.setQt(qt);
+//		itemDTO.setQt_code(qt_code);
+//		service.EditItem(itemDTO);
+//		return "index.html";
+//	}
 
 	// 리스트 삭제
 //	@RequestMapping(value = "/deletelist")
@@ -270,7 +300,7 @@ public class DataController {
 			throws Exception {
 		logger.debug("=========================DeleteItem=========================");
 		service.DeleteItem(list_id, item_no);
-		return "index.html";
+		return "success";
 	}
 
 }

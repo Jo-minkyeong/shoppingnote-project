@@ -71,27 +71,27 @@
 	
 
 	<resultMap id="viewTotalShopping" type="com.sharp.ing.domain.ShoppingItemDTO">
-	</resultMap>
+	</resultMap> 
 
-	<select id="viewTotalShoppingHeader" resultMap= "viewTotalShopping">
+ 	<select id="viewTotalShoppingHeader" resultMap= "viewTotalShopping">
 		<![CDATA[
-		select s.list_id, s.purchase_date, i.mart_code
-		from shopping_list s, item i, level4 l4
-		where s.userId='bae' and s.list_id=i.list_id and i.code04 = l4.code04
+		select distinct i.list_id, s.purchase_date 
+		from shopping_list s, item i
+		where s.userId=#{userId} and s.list_id=i.list_id
 		order by i.list_id;
 		]]>	
 	</select>
 
 	<select id="viewTotalShoppingBody" resultMap= "viewTotalShopping">
 		<![CDATA[
-		select i.item_no, l4.code04_vl, i.price, i.amount, i.qt, i.qt_code
+		select i.list_id, i.item_no, i.mart_code, l4.code04_vl, i.price, i.amount, i.qt, i.qt_code
 		from shopping_list s, item i, level4 l4
-		where s.userId='bae' and s.list_id=i.list_id and i.code04 = l4.code04
-		order by item_no;
+		where s.userId=#{userId} and s.list_id=i.list_id and i.code04 = l4.code04
+		order by i.list_id, item_no;
 		]]>	
-	</select>
-
-
+	</select>  
+	
+	
 	<resultMap id="viewShoppingItem" type="com.sharp.ing.domain.ShoppingItemDTO">
 	</resultMap>
 
@@ -111,14 +111,37 @@
 		]]>
 	</update>
 
-	<update id="editItem" parameterType="com.sharp.ing.domain.ItemDTO">
+		<insert id="editItem" parameterType="com.sharp.ing.domain.ItemDTO">
+		insert into item (list_id, item_no, mart_code, price, amount, code01, code02, code03, code04, qt_code, qt)
+		values
+		<foreach collection="list" item="item" separator=",">
+		(#{item.list_id}, #{item.item_no}, #{item.mart_code}, #{item.price}, #{item.amount}, 
+		#{item.code01}, #{item.code02}, #{item.code03}, #{item.code04}, #{item.qt_code}, #{item.qt})
+		</foreach> 
+		on duplicate key update
+		list_id=values(list_id), item_no=values(item_no), mart_code=values(mart_code), price=values(price), amount=values(amount), 
+		code01=values(code01), code02=values(code02), code03=values(code03), code04=values(code04), qt_code=values(qt_code), qt=values(qt)
+		
+		<!-- replace into item
+		(list_id, item_no, mart_code, price, amount, code01, code02, code03, code04, qt_code, qt)
+		values
 		<foreach collection="list" item="item" separator=";">
-		UPDATE item
-		SET mart_code=#{item.mart_code}, price=#{item.price}, amount=#{item.amount}, code01=#{item.code01}, code02=#{item.code02}, code03=#{item.code03}, code04=#{item.code04}, qt_code=#{item.qt_code}, qt=#{item.qt}
-		where list_id=#{item.list_id} and item_no=#{item.item_no}
-		</foreach>
-	</update>
-
+		(#{item.list_id}, #{item.item_no}, #{item.mart_code}, #{item.price}, #{item.amount}, 
+		#{item.code01}, #{item.code02}, #{item.code03}, #{item.code04}, #{item.code04}, #{item.qt})
+		</foreach> -->
+		</insert>
+		
+<!-- 		<insert id="upsertItem" parameterType="com.sharp.ing.domain.ItemDTO">
+		insert into item (list_id, item_no, mart_code, price, amount, code01, code02, code03, code04, qt_code, qt)
+		values
+		(#{list_id}, #{item_no}, #{mart_code}, #{price}, #{amount}, 
+		#{code01}, #{code02}, #{code03}, #{code04}, #{qt_code} ,#{qt})
+		on duplicate key update
+		list_id=values(list_id), item_no=values(item_no), mart_code=values(mart_code), price=values(price), amount=values(amount), 
+		code01=values(code01), code02=values(code02), code03=values(code03), code04=values(code04), qt_code=values(qt_code), qt=values(qt)
+		</insert> -->
+		
+		
 <!-- 	<delete id="deleteList" parameterType="int">
 		<![CDATA[
 		delete from shopping_list where list_id = #{list_id}

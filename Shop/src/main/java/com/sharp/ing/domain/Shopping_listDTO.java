@@ -17,7 +17,7 @@ public class Shopping_listDTO {
 	// 구매날짜
 	public String purchase_date;
 	// 가격 (Average에서 사용)
-	public int price;
+//	public int price;
 	
 
 	public Integer getId() {
@@ -52,13 +52,13 @@ public class Shopping_listDTO {
 		this.purchase_date = purchase_date;
 	}
 
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
+//	public int getPrice() {
+//		return price;
+//	}
+//
+//	public void setPrice(int price) {
+//		this.price = price;
+//	}
 	
 
 }

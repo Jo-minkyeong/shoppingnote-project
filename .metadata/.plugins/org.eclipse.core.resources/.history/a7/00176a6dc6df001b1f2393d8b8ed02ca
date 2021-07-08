@@ -1,0 +1,181 @@
+package com.sharp.ing.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.sharp.ing.domain.CategoryDTO;
+import com.sharp.ing.domain.DataDAO;
+import com.sharp.ing.domain.ItemDTO;
+import com.sharp.ing.domain.ShoppingItemDTO;
+import com.sharp.ing.domain.Shopping_listDTO;
+
+@Service("DataService")
+public class DataService {
+
+	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataService");
+
+	private ItemDTO itemDTO;
+	private DataDAO dataDAO;
+
+	JSONObject data = new JSONObject();
+
+	@Autowired
+	public DataService(ItemDTO itemDTO, DataDAO dataDAO) {
+		this.itemDTO = itemDTO;
+		this.dataDAO = dataDAO;
+	}
+
+	// 카데고리 코드 조회
+	public List<CategoryDTO> Category() throws Exception {
+		List<CategoryDTO> listCategory = dataDAO.category();
+		return listCategory;
+	}
+
+	// 리스트 생성
+	// insert문은 return type이 필요 없음
+	@Transactional
+	public void ItemHead(Shopping_listDTO itemHead) throws Exception {
+		logger.debug(itemHead + "===================list===================");
+		dataDAO.insertItemHead(itemHead);
+
+	}
+
+	// 물품등록
+	public void Item(List<ItemDTO> items) throws Exception {
+
+		logger.debug(items + "===================item===================");
+
+		int listID = dataDAO.selectListID();
+
+		// items loop item.setListId(listID)
+		for (ItemDTO item : items) {
+			item.setList_id(listID);
+		}
+
+		dataDAO.insertItem(items);
+	}
+
+	// 리스트, 물품 전체조회
+//	public List<ShoppingItemDTO> ViewTotalShoppingHeader(String userId) throws Exception{
+//		List<ShoppingItemDTO> listTotalShoppingHeader = dataDAO.viewTotalShoppingHeader(userId);
+//		return listTotalShoppingHeader;
+//	}
+//	public List<ShoppingItemDTO> ViewTotalShoppingBody(String userId) throws Exception{
+//		List<ShoppingItemDTO> listTotalShoppingBody = dataDAO.viewTotalShoppingBody(userId);
+//		return listTotalShoppingBody;
+//	}
+
+//	public Map<String, Object> ViewTotalShoppingHeader(String userId) throws Exception{
+//		Map<String, Object> listTotalShoppingHeader = dataDAO.viewTotalShoppingHeader(userId);
+//		return listTotalShoppingHeader;
+//}
+//	public Map<String, Object> ViewTotalShoppingBody(String userId) throws Exception{
+//		Map<String, Object> listTotalShoppingBody = dataDAO.viewTotalShoppingBody(userId);
+//		return listTotalShoppingBody;
+//}
+
+	// 리스트, 물품 전체조회
+	public JSONObject ViewTotalShopping(String userId) throws Exception {
+		List<ShoppingItemDTO> Header = dataDAO.viewTotalShoppingHeader(userId);
+		List<ShoppingItemDTO> Body = dataDAO.viewTotalShoppingBody(userId);
+
+		List<ShoppingItemDTO> view = Header.stream().distinct().collect(Collectors.toList());
+		logger.debug("======" + Header);
+
+		for (ShoppingItemDTO head : Header) {
+			for (ShoppingItemDTO body : Body) {
+				if (head.getList_id() == body.getList_id()) {
+					if (!view.contains(head)) {
+						view.add(head);
+					}
+					if (!view.contains(body)) {
+						view.add(body);
+					}
+
+				}
+			}
+		}
+
+		logger.debug(view + "===================view===================");
+		data.put("view", view);
+		return data;
+	}
+
+//	public List<ShoppingItemDTO> ViewTotalShopping (String userId) throws Exception{
+//
+//	      List<ShoppingItemDTO> items = dataDAO.viewTotalShopping(userId);
+//	     
+//	      List<ShoppingItemDTO> arrayList = new ArrayList<>();
+//	      
+//	      for(ShoppingItemDTO item : items) {
+//	    	  
+//	         int list_id = item.getList_id();
+//	         String date = item.getPurchase_date();
+//	         String mart = item.getMart_code();
+//	        
+//	    	  
+//	    	  
+//	    	  
+//	    	  
+////	         if(!arrayList.contains(item))
+////	        	 arrayList.add(item);
+//	         
+////	         if(item.getList_id() == item.getList_id()) {
+////	            item.getPurchase_date();
+////	            item.getMart_code();    
+////	         }
+//
+//	      
+//	      
+//	      data.
+//	      
+//	      System.out.println("item======================="+arrayList);
+//	      
+//	      
+//	      return arrayList;
+//	}
+
+//	      if(list_id == )
+
+	// 리스트, 물품 상세조회
+	public List<ShoppingItemDTO> ViewShoppingItem(String userId, int list_id) throws Exception {
+		List<ShoppingItemDTO> listShoppingItem = dataDAO.viewShoppingItem(userId, list_id);
+		return listShoppingItem;
+	}
+
+	// 리스트 수정
+	@Transactional
+	public void EditItemHead(Shopping_listDTO editItemHead) throws Exception {
+		dataDAO.editShoppinglist(editItemHead);
+	}
+
+	// 물품 수정
+	public void EditItem(List<ItemDTO> editItems) throws Exception {
+
+//		for (ItemDTO item:editItems) {
+//			dataDAO.upsertItem(item);
+//		}
+		dataDAO.editItem(editItems);
+	}
+
+	// 리스트 삭제
+	// transactional = 하나 지우고 안지워지면 rollback 시켜줌 (DeleteList, DeleteItem 연결)
+//	@Transactional
+//	public void DeleteList(int list_id) throws Exception {
+//		dataDAO.deleteList(list_id);
+//		dataDAO.deleteItemList(list_id);
+//	}
+
+	// 물품 삭제
+	public void DeleteItem(int list_id, int item_no) throws Exception {
+		dataDAO.deleteItem(list_id, item_no);
+	}
+
+}

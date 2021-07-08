@@ -67,6 +67,5 @@ public class ShoppingItemDTO {
 	public void setQt_code(String qt_code) {
 		this.qt_code = qt_code;
 	}
-	
 
 }

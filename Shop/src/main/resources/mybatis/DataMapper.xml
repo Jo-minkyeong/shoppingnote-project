@@ -61,10 +61,10 @@
 	</insert>
 
 
-	<resultMap id="viewTotalShopping" type="com.sharp.ing.domain.ShoppingItemDTO">
+	<resultMap id="viewShopping" type="com.sharp.ing.domain.ShoppingItemDTO">
 	</resultMap>
 
-	<select id="viewTotalShoppingHead" resultMap="viewTotalShopping">
+	<select id="viewTotalShoppingHead" resultMap="viewShopping">
 		<![CDATA[
 		select distinct i.list_id, s.purchase_date, m.mart_name
 		from shopping_list s, item i, mart m
@@ -73,7 +73,7 @@
 		]]>
 	</select>
 
-	<select id="viewTotalShoppingBody" resultMap="viewTotalShopping">
+	<select id="viewTotalShoppingBody" resultMap="viewShopping">
 		<![CDATA[
 		select i.list_id, i.item_no, l4.code04_vl, i.price, i.amount, i.qt, i.qt_code
 		from shopping_list s, item i, level4 l4
@@ -82,17 +82,27 @@
 		]]>
 	</select>
 
-
-	<resultMap id="viewShoppingItem" type="com.sharp.ing.domain.ShoppingItemDTO">
-	</resultMap>
-
-<!-- 	<select id="viewShoppingItem" resultMap="viewShoppingItem">
+ 	
+	<select id="viewShoppingHead" resultMap="viewShopping">
 		<![CDATA[
-		select s.purchase_date, l4.code04_vl, i.mart_code, i.price, i.amount, i.qt, i.qt_code
-		from shopping_list s, item i, level4 l4
-		where s.userId=#{userId} and i.list_id=#{list_id} and s.list_id=i.list_id and i.code04 = l4.code04;
+		select distinct i.list_id, s.purchase_date, m.mart_name
+		from shopping_list s, item i, mart m
+		where s.userId=#{userId} and i.list_id=#{list_id} and s.list_id=i.list_id and i.mart_code = m.mart_code
+		order by i.list_id;
 		]]>
-	</select> -->
+	</select>
+	
+	<resultMap id="viewShoppingItem" type="com.sharp.ing.domain.ItemDTO">
+	</resultMap> 
+	
+	<select id="viewShoppingBody" resultMap="viewShoppingItem">
+		<![CDATA[
+		select i.item_no, l4.code04_vl, i.price, i.code01, i.code02, i.code03, i.code04, i.amount, i.qt, i.qt_code
+		from shopping_list s, item i, level4 l4
+		where s.userId=#{userId} and i.list_id=#{list_id} and s.list_id=i.list_id and i.code04 = l4.code04
+		order by i.list_id, item_no;
+		]]>
+	</select>
 
 	<update id="editShoppinglist" parameterType="com.sharp.ing.domain.ShoppingListDTO">
 		<![CDATA[
@@ -136,10 +146,13 @@
 		parameterType="int"> <![CDATA[ delete from item where list_id = #{list_id} 
 		]]> </delete> -->
 
-	<delete id="deleteItem" parameterType="int">
-		<![CDATA[
-		delete from item where list_id=#{list_id} and item_no=#{item_no}
-		]]>
+	<delete id="deleteItem" parameterType="java.util.List">
+		delete from item 
+		<where>
+		<foreach collection="list" item="item" separator="OR">
+		(list_id=#{item.list_id} and item_no=#{item.item_no})
+		</foreach>
+		</where>
 	</delete>
 
 </mapper>

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="ShoppingItemDTO"/>
+		<item key="selection" value="ItemDTO"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="true"/>
 		<list key="findhistory">
+			<item value="ItemDTO"/>
 			<item value="ShoppingItemDTO"/>
 			<item value="Avgdata"/>
 			<item value="list"/>
@@ -22,7 +23,6 @@
 			<item value="u.family_count"/>
 			<item value="family"/>
 			<item value="user"/>
-			<item value="u.userId"/>
 		</list>
 		<list key="replacehistory">
 			<item value="avgData"/>

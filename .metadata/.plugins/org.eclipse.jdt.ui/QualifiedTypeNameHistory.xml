@@ -15,4 +15,6 @@
     <fullyQualifiedTypeName name="java.util.Hashtable"/>
     <fullyQualifiedTypeName name="com.sharp.ing.domain.ShoppingItemDTO"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.sharp.ing.service.StatisticsService"/>
+    <fullyQualifiedTypeName name="com.sharp.ing.domain.ShoppingListDTO"/>
 </qualifiedTypeNameHistroy>

@@ -23,10 +23,12 @@ public class ItemDTO {
 	private int code03;
 	// 세분류 코드
 	private int code04;
-	// 용량 단위 코드
-	public String qt_code;
+	// 세분류 코드 값 
+	private String code04_vl;
 	// 용량 적어주는 칸
 	public int qt;
+	// 용량 단위 코드
+	public String qt_code;
 
 	public Integer getItem_no() {
 		return item_no;
@@ -98,6 +100,14 @@ public class ItemDTO {
 
 	public void setCode04(int code04) {
 		this.code04 = code04;
+	}
+
+	public String getCode04_vl() {
+		return code04_vl;
+	}
+
+	public void setCode04_vl(String code04_vl) {
+		this.code04_vl = code04_vl;
 	}
 
 	public String getQt_code() {

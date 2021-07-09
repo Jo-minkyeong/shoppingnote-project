@@ -1,8 +1,6 @@
 package com.sharp.ing.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -104,10 +102,17 @@ public class DataService {
 	}
 
 	// 리스트, 물품 상세조회
-//	public List<ShoppingItemDTO> ViewShoppingItem(String userId, int list_id) throws Exception {
-//		List<ShoppingItemDTO> listShoppingItem = dataDAO.viewShoppingItem(userId, list_id);
-//		return listShoppingItem;
-//	}
+	public JSONObject ViewShoppingItem(String userId, int list_id) throws Exception {
+		
+		// 구조 : { head, body[{},{}..] }
+		ShoppingItemDTO ShoppingHead = dataDAO.viewShoppingHead(userId, list_id);
+		List<ItemDTO> listShoppingBody= dataDAO.viewShoppingBody(userId, list_id);
+		
+		data.put("head", ShoppingHead);
+		data.put("body", listShoppingBody);
+	
+		return data;
+	}
 
 	// 리스트 수정
 	@Transactional
@@ -133,8 +138,8 @@ public class DataService {
 //	}
 
 	// 물품 삭제
-	public void DeleteItem(int list_id, int item_no) throws Exception {
-		dataDAO.deleteItem(list_id, item_no);
+	public void DeleteItem(List<ShoppingItemDTO> listdeleteItem) throws Exception {
+		dataDAO.deleteItem(listdeleteItem);
 	}
 
 }

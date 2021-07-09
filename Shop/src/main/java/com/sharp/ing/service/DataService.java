@@ -18,7 +18,7 @@ import com.sharp.ing.domain.CategoryDTO;
 import com.sharp.ing.domain.DataDAO;
 import com.sharp.ing.domain.ItemDTO;
 import com.sharp.ing.domain.ShoppingItemDTO;
-import com.sharp.ing.domain.Shopping_listDTO;
+import com.sharp.ing.domain.ShoppingListDTO;
 
 @Service("DataService")
 public class DataService {
@@ -27,7 +27,8 @@ public class DataService {
 
 	private ItemDTO itemDTO;
 	private DataDAO dataDAO;
-
+	private List<CategoryDTO> listCategory;
+	
 	JSONObject data = new JSONObject();
 
 	@Autowired
@@ -38,28 +39,30 @@ public class DataService {
 
 	// 카데고리 코드 조회
 	public List<CategoryDTO> Category() throws Exception {
-		List<CategoryDTO> listCategory = dataDAO.category();
+		listCategory = dataDAO.category();
 		return listCategory;
 	}
 
 	// 리스트 생성
 	// insert문은 return type이 필요 없음
 	@Transactional
-	public void ItemHead(Shopping_listDTO itemHead) throws Exception {
-		logger.debug(itemHead + "===================list===================");
-
+	public void ItemHead(ShoppingListDTO itemHead) throws Exception {
+		
+		logger.debug("=========================ItemHead=========================");
+		logger.debug("itemHead = " + itemHead.toString());
+		
 		dataDAO.insertItemHead(itemHead);
-
 	}
 
 	// 물품등록
 	public void Item(List<ItemDTO> items) throws Exception {
-
-		logger.debug(items + "===================item===================");
+		
+		logger.debug("=========================Item=========================");
+		logger.debug("Item = " + items.toString());
 
 		int listID = dataDAO.selectListID();
 
-		// items loop item.setListId(listID)
+		// items loop => item.setListId(listID)
 		for (ItemDTO item : items) {
 			item.setList_id(listID);
 		}
@@ -69,42 +72,46 @@ public class DataService {
 
 	// 리스트, 물품 전체조회
 	public Object ViewTotalShopping(String userId) throws Exception {
-		List<ShoppingItemDTO> Header = dataDAO.viewTotalShoppingHeader(userId);
-		List<ShoppingItemDTO> Body = dataDAO.viewTotalShoppingBody(userId);
+		
+		logger.debug("=========================ViewTotalShopping=========================");
+		
+		List<ShoppingItemDTO> listShoppingHead = dataDAO.viewTotalShoppingHead(userId);
+		List<ShoppingItemDTO> listShoppingBody = dataDAO.viewTotalShoppingBody(userId);
 
 		// 구조 : [{ head, body[]}]
-		List result = new ArrayList<>();
+		List TotalView = new ArrayList<>();
 
-		logger.debug("======" + Header);
+		logger.debug("======" + listShoppingHead);
 
-		for (ShoppingItemDTO head : Header) {
+		for (ShoppingItemDTO itemHead : listShoppingHead) {
+			
 			Map<String, Object> item = new Hashtable<>();
-			item.put("head", head);
+			item.put("head", itemHead);
 
-			List<ShoppingItemDTO> bodyItems = new ArrayList<>();
+			List<ShoppingItemDTO> listItems = new ArrayList<>();
 
-			for (ShoppingItemDTO body : Body) {
-				if (head.getList_id() == body.getList_id()) {
-					bodyItems.add(body);
+			for (ShoppingItemDTO itemBody : listShoppingBody) {
+				if (itemHead.getList_id() == itemBody.getList_id()) {
+					listItems.add(itemBody);
 				}
 			}
-			item.put("body", bodyItems);
+			item.put("body", listItems);
 
-			result.add(item);
+			TotalView.add(item);
 		}
 
-		return result;
+		return TotalView;
 	}
 
 	// 리스트, 물품 상세조회
-	public List<ShoppingItemDTO> ViewShoppingItem(String userId, int list_id) throws Exception {
-		List<ShoppingItemDTO> listShoppingItem = dataDAO.viewShoppingItem(userId, list_id);
-		return listShoppingItem;
-	}
+//	public List<ShoppingItemDTO> ViewShoppingItem(String userId, int list_id) throws Exception {
+//		List<ShoppingItemDTO> listShoppingItem = dataDAO.viewShoppingItem(userId, list_id);
+//		return listShoppingItem;
+//	}
 
 	// 리스트 수정
 	@Transactional
-	public void EditItemHead(Shopping_listDTO editItemHead) throws Exception {
+	public void EditItemHead(ShoppingListDTO editItemHead) throws Exception {
 		dataDAO.editShoppinglist(editItemHead);
 	}
 

@@ -16,7 +16,7 @@ import com.sharp.ing.domain.CompareDTO;
 import com.sharp.ing.service.CompareService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5000")
+@CrossOrigin(origins = "*")
 public class CompareController {
 	
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.domain.CompareController");
@@ -26,8 +26,7 @@ public class CompareController {
 	
 	//필드
 	private CompareService service;
-	
-	List<CompareDTO> listCompare;
+	private List<CompareDTO> listCompare;
 	
 	//생성자
 	@Autowired
@@ -35,13 +34,11 @@ public class CompareController {
 		this.service = service;
 	}
 	
-	
 	@RequestMapping(value="/compare")
 	public JSONObject Compare(@RequestParam(value = "code01") int code01, @RequestParam(value = "code02") int code02, 
 			@RequestParam(value = "code03") int code03, @RequestParam(value = "code04") int code04, Model model) throws Exception {
 		
 		logger.debug("=========================Compare=========================");
-		service.Compare(code01, code02, code03, code04);
 		
 		listCompare = service.Compare(code01, code02, code03, code04);
 		model.addAttribute(model);

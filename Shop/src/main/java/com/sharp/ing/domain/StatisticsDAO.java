@@ -14,10 +14,10 @@ public interface StatisticsDAO {
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.domain.StatisticsDAO");
 	
 	// 전체 소비 평균 값
-	public List<Shopping_listDTO> totalAvg() throws Exception;
+	public List<ShoppingListDTO> totalAvg() throws Exception;
 	
 	// 사용자 소비 평균 값
-	public List<Shopping_listDTO> userAvg(String userId) throws Exception;
+	public List<ShoppingListDTO> userAvg(String userId) throws Exception;
 
 	//카테고리별 통계
 	public List<CategoryAvgDTO> categoryAvg3(String userId) throws Exception;

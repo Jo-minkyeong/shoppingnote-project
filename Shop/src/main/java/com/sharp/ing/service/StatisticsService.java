@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sharp.ing.domain.CategoryAvgDTO;
-import com.sharp.ing.domain.Shopping_listDTO;
+import com.sharp.ing.domain.ShoppingListDTO;
 import com.sharp.ing.domain.StatisticsDAO;
 
 @Service("StatisticsService")
@@ -24,14 +24,14 @@ public class StatisticsService {
 	}
 
 	// 전체 소비 평균 값
-	public List<Shopping_listDTO> TotalAvg() throws Exception {
-		List<Shopping_listDTO> totalAvg = statisticsDAO.totalAvg();
+	public List<ShoppingListDTO> TotalAvg() throws Exception {
+		List<ShoppingListDTO> totalAvg = statisticsDAO.totalAvg();
 		return totalAvg;
 	}
 
 	// 사용자 소비 평균 값
-	public List<Shopping_listDTO> UserAvg(String userId) throws Exception {
-		List<Shopping_listDTO> userAvg = statisticsDAO.userAvg(userId);
+	public List<ShoppingListDTO> UserAvg(String userId) throws Exception {
+		List<ShoppingListDTO> userAvg = statisticsDAO.userAvg(userId);
 		return userAvg;
 	}
 

@@ -13,31 +13,28 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository("dataDAO")
 public interface DataDAO {
+	
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.domain.DataDAO");
 
 
 	// 카데고리 코드 조회
 	public List<CategoryDTO> category() throws Exception;
-
 	
 	// 리스트 생성
-	public void insertItemHead(Shopping_listDTO itemHead) throws Exception;
+	public void insertItemHead(ShoppingListDTO itemHead) throws Exception;
 	// 아이템 생성
 	public Integer selectListID() throws Exception;
 	public void insertItem(List<ItemDTO> item) throws Exception;
 	
 	// 리스트, 물품 전체조회 
-	public List<ShoppingItemDTO> viewTotalShoppingHeader(String userId) throws Exception;
+	public List<ShoppingItemDTO> viewTotalShoppingHead(String userId) throws Exception;
 	public List<ShoppingItemDTO> viewTotalShoppingBody(String userId) throws Exception;	
-	
-	
-	public List<ShoppingItemDTO> viewTotalShopping(String userId) throws Exception;	
-	
+
 	// 리스트, 물품 상세조회 
-	public List<ShoppingItemDTO> viewShoppingItem(String userId, int list_id) throws Exception;
+//	public List<ShoppingItemDTO> viewShoppingItem(String userId, int list_id) throws Exception;
 	
 	// 리스트, 물품 수정
-	public void editShoppinglist(Shopping_listDTO editItemHead) throws Exception;
+	public void editShoppinglist(ShoppingListDTO editItemHead) throws Exception;
 	public void editItem(List<ItemDTO> editItems) throws Exception;
 
 //	public void upsertItem(ItemDTO editItems) throws Exception;

@@ -1,6 +1,5 @@
 package com.sharp.ing.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +8,8 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -115,8 +116,7 @@ public class DataController {
 
 		JsonElement findItems = jparser.parse(param.get("body").toString());
 		ItemDTO[] item = gson.fromJson(findItems.toString(), ItemDTO[].class);
-		// asList => 배열을 리스트로 바꾸어줌/ java.util.Arrays.ArrayList (Arrays클래스의 메소드로
-		// ArrayList로 바꾸어줌, 사이즈 고정)/ java.util.ArrayList 클래스와는 다른 클래스
+		// asList => 배열을 리스트로 바꾸어줌/ java.util.Arrays.ArrayList (Arrays클래스의 메소드로 ArrayList로 바꾸어줌, 사이즈 고정)/ java.util.ArrayList 클래스와는 다른 클래스
 		List<ItemDTO> items = Arrays.asList(item);
 
 		service.Item(items);
@@ -126,10 +126,13 @@ public class DataController {
 
 	// 리스트, 아이템 전체조회
 	@RequestMapping("/viewitems")
-	public Object ViewTotalShopping(@RequestParam(value = "userId") String userId, Model model) throws Exception {
+	public Object ViewTotalShopping(Authentication authentication, Model model) throws Exception {
 
 		logger.debug("=========================ViewTotalShopping=========================");
 
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
 		Object total = service.ViewTotalShopping(userId);
 		model.addAttribute(total);
 
@@ -138,10 +141,12 @@ public class DataController {
 
 	// 리스트, 아이템 상세조회
 	@RequestMapping("/viewitem")
-	public JSONObject ViewShoppingItem(@RequestParam(value = "userId") String userId, @RequestParam(value = "list_id") Integer list_id) throws Exception {
+	public JSONObject ViewShoppingItem(Authentication authentication, @RequestParam(value = "list_id") Integer list_id) throws Exception {
 
 		logger.debug("=========================ViewShoppingItem=========================");
 
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
 //		if(list_id != null) {
 //			service.ViewShoppingItem(userId, list_id);
 //			listShoppingItem = service.ViewShoppingItem(userId, list_id);

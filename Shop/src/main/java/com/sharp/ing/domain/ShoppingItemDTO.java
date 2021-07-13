@@ -7,6 +7,7 @@ public class ShoppingItemDTO {
 	private String purchase_date;
 	private String code04_vl;
 	private String mart_name;
+	private String mart_code;
 	private int price;
 	private int amount;
 	private String qt;
@@ -42,6 +43,12 @@ public class ShoppingItemDTO {
 	}
 	public void setMart_name(String mart_name) {
 		this.mart_name = mart_name;
+	}
+	public String getMart_code() {
+		return mart_code;
+	}
+	public void setMart_code(String mart_code) {
+		this.mart_code = mart_code;
 	}
 	public int getPrice() {
 		return price;

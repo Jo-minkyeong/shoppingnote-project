@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +44,11 @@ public class StatisticsController {
 
 	// 소비 평균 값
 	@RequestMapping(value = "/average")
-	public JSONObject UserAvg(@RequestParam(value = "userId") String userId, Model model) throws Exception {
+	public JSONObject UserAvg(Authentication authentication, Model model) throws Exception {
 			
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
 		totalAverage = service.TotalAvg();
 		userAverage = service.UserAvg(userId);
 		
@@ -60,7 +65,10 @@ public class StatisticsController {
 	
 	// 카테고리별 통계
 	@RequestMapping(value = "/category-average")
-	public JSONObject CategoryAvg(@RequestParam(value = "userId") String userId, Model model) throws Exception {
+	public JSONObject CategoryAvg(Authentication authentication, Model model) throws Exception {
+		
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
 		
 		listAvgCategory3 = service.CategoryAvg3(userId);
 		listAvgCategory6 = service.CategoryAvg6(userId);
@@ -78,6 +86,7 @@ public class StatisticsController {
 
 		return categoryAvgData;
 	}
+
 
 }
 

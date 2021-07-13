@@ -16,4 +16,8 @@ public interface CompareDAO {
 	
 	public List<CompareDTO> compare(int code01, int code02, int code03, int code04) throws Exception;
 	
+	public List<PurchaseDTO> recentList() throws Exception;
+	
+	public int avgPrice() throws Exception;
+	
 }

@@ -43,7 +43,7 @@ public class DataService {
 
 	// 리스트 생성
 	// insert문은 return type이 필요 없음
-	@Transactional
+
 	public void ItemHead(ShoppingListDTO itemHead) throws Exception {
 		
 		logger.debug("=========================ItemHead=========================");
@@ -64,7 +64,6 @@ public class DataService {
 		for (ItemDTO item : items) {
 			item.setList_id(listID);
 		}
-
 		dataDAO.insertItem(items);
 	}
 
@@ -115,7 +114,7 @@ public class DataService {
 	}
 
 	// 리스트 수정
-	@Transactional
+
 	public void EditItemHead(ShoppingListDTO editItemHead) throws Exception {
 		dataDAO.editShoppinglist(editItemHead);
 	}
@@ -142,4 +141,11 @@ public class DataService {
 		dataDAO.deleteItem(listdeleteItem);
 	}
 
+	/*
+	 * public static boolean isEmpty(Object obj) { if( obj instanceof List ) return
+	 * obj==null || ((List<?>)obj).isEmpty(); else{ return obj == null; } }
+	 * 
+	 * 
+	 * public static boolean isNotEmpty(String str) { return !isEmpty(str); }
+	 */
 }

@@ -4,7 +4,8 @@
 <mapper namespace="com.sharp.ing.domain.CompareDAO">
 
 
-	<resultMap id="Compare" type="com.sharp.ing.domain.CompareDTO">
+	<resultMap id="Compare"
+		type="com.sharp.ing.domain.CompareDTO">
 	</resultMap>
 
 	<select id="compare" resultMap="Compare">
@@ -16,6 +17,51 @@
 	and l1.code01=l2.code01 and l2.code02=l3.code02 and l3.code03=l4.code03 and s.list_id=i.list_id and i.code04 = l4.code04 and i.mart_code = m.mart_code
 	order by price;
 	]]>
+	</select>
+
+	<resultMap id="Purchase"
+		type="com.sharp.ing.domain.PurchaseDTO">
+	</resultMap>
+
+	<select id="recentList" resultMap="Purchase">
+	<![CDATA[
+	select list_id, item_no, code04, code04_vl, purchase_date, userId
+		from(
+		select distinct dense_rank() over(order by list_id desc) AS rownum, i.item_no, i.code04, s.purchase_date, s.userId, l.code04_vl, s.list_id
+		from item i, shopping_list s, quantity q, level4 l
+		where i.list_id = s.list_id and userId=#{userId} and i.qt_code=q.qt_code and l.code04=i.code04
+		order by list_id desc
+		)recent
+	where recent.rownum<3;
+	]]>
+	</select>
+
+<!-- 	<select id="avgPrice" resultType="int">
+		select a1.total_avg - a1.price as price
+		from(
+		select avg(i.price) as total_avg,
+		(select price as item_price
+		from item
+		where item_no=#{item_no}
+		) as price
+		from
+		item i
+		where i.code04=#{code_04})a1;
+	</select> -->
+
+	<select id="avgPrice" resultType="int">
+		select round((avg_price *i.amount *i.qt) - i.price) as price
+		from item i, (
+				select avg((a1.price/a1.amount)/a1.qt) as avg_price
+				from(
+					select i.price, i.amount, i.qt
+					from item i
+					where i.code04 =(select i.code04
+									from item i
+									where i.item_no =#{item_no})
+								)a1
+							)a2
+		where item_no =#{item_no}
 	</select>
 
 </mapper>

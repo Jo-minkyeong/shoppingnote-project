@@ -21,7 +21,6 @@ public class CompareController {
 	
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.domain.CompareController");
 
-	JSONObject jsonObject = new JSONObject();
 	JSONObject data = new JSONObject();
 	
 	//필드
@@ -45,6 +44,22 @@ public class CompareController {
 		data.put("Compare", listCompare);
 		
 		return data;
+		
 	}
+	
+	
+	@RequestMapping(value="/compare")
+	public JSONObject Analysis(Model model) throws Exception {
+		
+		logger.debug("=========================Compare=========================");
+		
+		JSONObject Compare = service.Difference();
+		model.addAttribute(model);
+		data.put("Compare", Compare);
+		
+		return data;
+		
+	}
+	
 	
 }

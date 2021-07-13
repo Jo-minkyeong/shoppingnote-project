@@ -1,0 +1,11 @@
+package com.sharp.ing.repository;
+
+import java.lang.reflect.Member;
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<Member, Long>{
+	
+	 Optional<Member> findByUserId(String userId);
+	 
+	 boolean existsByUserId(String userId);
+}

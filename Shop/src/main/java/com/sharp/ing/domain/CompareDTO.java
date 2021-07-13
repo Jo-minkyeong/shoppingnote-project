@@ -12,7 +12,6 @@ public class CompareDTO {
 	private String mart_name;
 	private int price;
 	
-
 	public String getCode04_vl() {
 		return code04_vl;
 	}

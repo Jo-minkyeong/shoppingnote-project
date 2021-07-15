@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.sharp.ing.domain.CompareDAO;
 import com.sharp.ing.domain.CompareDTO;
+import com.sharp.ing.domain.ItemDTO;
+import com.sharp.ing.domain.PurchaseDTO;
 
 @Service("CompareService")
 public class CompareService {
@@ -32,18 +34,28 @@ public class CompareService {
 	}
 	
 	
-//	public String analysis() throws Exception {
-//		return "" ;
-//	}
-	
-	public JSONObject Difference() throws Exception{
+	public List<PurchaseDTO> analysis(String userId) throws Exception {
 		
-			int difference = compareDAO.avgPrice();
-			
-			data.put("price", difference);
-			
-		return data;
+		List<PurchaseDTO> recentlist = compareDAO.recentList(userId);
+		int difference = compareDAO.avgPrice();
+		
+		
+		
+		
+		for (PurchaseDTO item : recentlist) {
+			item.setItem_no(difference);
+		}
+		
+		return recentlist ;
+		
 	}
+	
+//	public JSONObject Difference(int item_no) throws Exception{
+//			
+//			data.put("d_price", difference);
+//			
+//		return data;
+//	}
 	
 	
 }

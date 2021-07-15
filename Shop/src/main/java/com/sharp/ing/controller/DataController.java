@@ -100,11 +100,14 @@ public class DataController {
 	// http통신할때 post는 body에다 data를 집어넣어서 받아오는 용도 (프론트에서 data를 받아옴)
 	// @RequestBody에 param에 있는 값을 매칭해서 보내줘라.
 	@RequestMapping(value = "/item", method = RequestMethod.POST, consumes = "application/json; charset=utf-8")
-	public @ResponseBody String Item(@RequestBody Map<String, Object> param) throws Exception {
+	public @ResponseBody String Item(@RequestBody Map<String, Object> param, Authentication authentication) throws Exception {
 
 		logger.debug("=========================Item=========================");
 		logger.debug("param = " + param.toString());
 
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
 		// jsonPaserPser 클래스 객체를 만들고 해당 객체에
 		JsonParser jparser = new JsonParser();
 
@@ -112,6 +115,8 @@ public class DataController {
 		JsonElement findItem = jparser.parse(param.get("head").toString());
 
 		listDTO = gson.fromJson(findItem, ShoppingListDTO.class);
+		listDTO.setuserId(userId);
+		
 		service.ItemHead(listDTO);
 
 		JsonElement findItems = jparser.parse(param.get("body").toString());
@@ -164,15 +169,19 @@ public class DataController {
 
 	// 리스트 수정
 	@RequestMapping(value = "/edititem", method = RequestMethod.POST, consumes = "application/json; charset=utf-8")
-	public @ResponseBody String EditItem(@RequestBody Map<String, Object> param) throws Exception {
+	public @ResponseBody String EditItem(@RequestBody Map<String, Object> param, Authentication authentication) throws Exception {
 
 		logger.debug("=========================EditItem=========================");
 		logger.debug("param = " + param.toString());
 
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
 		JsonParser jparser = new JsonParser();
 
 		JsonElement editItem = jparser.parse(param.get("head").toString());
 		listDTO = gson2.fromJson(editItem, ShoppingListDTO.class);
+		listDTO.setuserId(userId);
 		service.EditItemHead(listDTO);
 
 		JsonElement editItems = jparser.parse(param.get("body").toString());

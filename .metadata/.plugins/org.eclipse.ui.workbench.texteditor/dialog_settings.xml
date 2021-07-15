@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="spring-boot-starter-data-jpa"/>
+		<item key="selection" value="id"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="true"/>
 		<list key="findhistory">
+			<item value="id"/>
 			<item value="spring-boot-starter-data-jpa"/>
 			<item value="ItemDTO"/>
 			<item value="ShoppingItemDTO"/>
@@ -22,7 +23,6 @@
 			<item value="=#{userId}"/>
 			<item value="#{userId}"/>
 			<item value="u.family_count"/>
-			<item value="family"/>
 		</list>
 		<list key="replacehistory">
 			<item value="avgData"/>

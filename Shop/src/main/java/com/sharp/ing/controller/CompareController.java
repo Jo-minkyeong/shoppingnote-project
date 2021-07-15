@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sharp.ing.domain.CompareDTO;
+import com.sharp.ing.domain.PurchaseDTO;
 import com.sharp.ing.service.CompareService;
 
 @RestController
@@ -26,6 +29,7 @@ public class CompareController {
 	//필드
 	private CompareService service;
 	private List<CompareDTO> listCompare;
+	private List<PurchaseDTO> listPurchase;
 	
 	//생성자
 	@Autowired
@@ -47,19 +51,26 @@ public class CompareController {
 		
 	}
 	
-	
-	@RequestMapping(value="/compare")
-	public JSONObject Analysis(Model model) throws Exception {
+	@RequestMapping(value="/analysis")
+	public JSONObject Analysis(Authentication authentication, Model model) throws Exception {
+		
+		logger.debug("=========================Compare=========================");
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		
+		listPurchase = service.analysis(userId);
 		
 		logger.debug("=========================Compare=========================");
 		
-		JSONObject Compare = service.Difference();
-		model.addAttribute(model);
-		data.put("Compare", Compare);
+//		JSONObject difference = service.Difference();
+//		model.addAttribute(model);
+		
+		data.put("listPurchase", listPurchase);
+//		data.put("difference", difference);
+	
 		
 		return data;
 		
 	}
-	
 	
 }

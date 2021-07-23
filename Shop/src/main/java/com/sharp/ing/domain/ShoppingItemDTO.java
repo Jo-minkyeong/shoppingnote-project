@@ -10,7 +10,7 @@ public class ShoppingItemDTO {
 	private String mart_code;
 	private int price;
 	private int amount;
-	private String qt;
+	private float qt;
 	private String qt_code;
 	
 
@@ -62,10 +62,10 @@ public class ShoppingItemDTO {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public String getQt() {
+	public float getQt() {
 		return qt;
 	}
-	public void setQt(String qt) {
+	public void setQt(float qt) {
 		this.qt = qt;
 	}
 	public String getQt_code() {

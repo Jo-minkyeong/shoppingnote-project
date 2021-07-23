@@ -1,0 +1,23 @@
+package com.sharp.ing.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sharp.ing.firebase.FirebaseMessagingSnippets;
+
+@RestController
+public class FirebaseController {
+	private FirebaseMessagingSnippets service;
+	
+	@Autowired
+	public FirebaseController(FirebaseMessagingSnippets service) {
+		this.service = service;
+	}
+	
+	@RequestMapping(value="/test")
+	public String testFb() throws Exception{
+		service.sendToToken();
+		return "A";
+	}
+}

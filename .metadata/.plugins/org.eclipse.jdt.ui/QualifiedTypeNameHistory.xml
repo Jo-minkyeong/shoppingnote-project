@@ -21,4 +21,11 @@
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.Authentication"/>
     <fullyQualifiedTypeName name="org.json.simple.JSONObject"/>
+    <fullyQualifiedTypeName name="org.springframework.core.SpringVersion"/>
+    <fullyQualifiedTypeName name="org.apache.catalina.core.ApplicationContext"/>
+    <fullyQualifiedTypeName name="org.springframework.context.ApplicationContext"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
+    <fullyQualifiedTypeName name="org.springframework.scheduling.annotation.Scheduled"/>
+    <fullyQualifiedTypeName name="com.sharp.ing.domain.StatisticsDAO"/>
+    <fullyQualifiedTypeName name="com.sharp.ing.domain.NoteDTO"/>
 </qualifiedTypeNameHistroy>

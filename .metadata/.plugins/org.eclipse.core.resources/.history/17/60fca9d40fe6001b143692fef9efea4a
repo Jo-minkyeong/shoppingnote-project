@@ -1,0 +1,74 @@
+package com.sharp.ing.service;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sharp.ing.domain.CompareDAO;
+import com.sharp.ing.domain.CompareDTO;
+import com.sharp.ing.domain.PurchaseDTO;
+
+@Service("CompareService")
+public class CompareService {
+	
+	Logger logger = LoggerFactory.getLogger("com.sharp.ing.service.CompareService");
+
+	JSONObject data = new JSONObject();
+	void testJobMethod();
+	
+	//필드 
+	private CompareDAO compareDAO;
+
+	@Autowired
+	public CompareService(CompareDAO compareDAO) {
+		this.compareDAO = compareDAO;
+	}
+	
+	public List<CompareDTO> Compare(int code01, int code02, int code03, int code04) throws Exception{
+		List<CompareDTO> listCompare = compareDAO.compare(code01, code02, code03, code04);
+		return listCompare;
+	}
+	
+	//분석
+	public List<CompareDTO> analysis(String userId) throws Exception {
+		
+		List<CompareDTO> recentlist = compareDAO.recentList(userId);
+		
+		List analysis = new ArrayList<>();
+		
+		int item_no;
+		int difference;
+	
+		//구조 : [{},{}]
+		for (CompareDTO item : recentlist) {
+			
+			item_no = item.getItem_no();
+			difference = compareDAO.avgPrice(item_no);
+			
+			System.out.println("item_no: "+item_no+" difference:"+difference);
+			
+			Map<String, Object> map = new Hashtable<>();
+			
+			map.put("code04_vl",item.getCode04_vl());
+			map.put("qt",item.getQt());
+			map.put("qt_code",item.getQt_code());
+			map.put("amount",item.getAmount());
+			map.put("purchase_date",item.getPurchase_date());
+			map.put("price",item.getPrice());
+			map.put("difference",difference);
+			
+			logger.debug("analysis: "+analysis);
+			
+			analysis.add(map);
+		}
+		return analysis;
+	}
+	
+}

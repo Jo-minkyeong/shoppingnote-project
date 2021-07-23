@@ -14,7 +14,7 @@ from
 from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
 		from(select m.userId as u_id, sum(i.price)/m.family_count as average
 			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date >= DATE_ADD(now(), interval -1 month)
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -12 month) and DATE_ADD(now(), interval -11 month)
 			group by m.userId, m.family_count)a1
 			)b1
 		)c1
@@ -23,61 +23,16 @@ union all
 from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
 		from(select m.userId as u_id, sum(i.price)/m.family_count as average
 			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -2 month) and DATE_ADD(now(), interval -1 month)
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -11 month) and DATE_ADD(now(), interval -10 month)
 			group by m.userId, m.family_count)a1
 			)b1
 		)
 union all
 (select (ifnull (total_avg, "0"))  as total_avg
 from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
-		from(select m.userId as u_id, sum(i.price)/m.family_count as average
+		from(select m.userId as u_id, sum(i.price)/m.family_count as average 
 			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -3 month) and DATE_ADD(now(), interval -2 month)
-			group by m.userId, m.family_count)a1
-			)b1
-		)
-union all
-(select (ifnull (total_avg, "0"))  as total_avg
-from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
-		from(select m.userId as u_id, sum(i.price)/m.family_count as average
-			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -4 month) and DATE_ADD(now(), interval -3 month)
-			group by m.userId, m.family_count)a1
-			)b1
-		)
-union all
-(select (ifnull (total_avg, "0"))  as total_avg
-from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
-		from(select m.userId as u_id, sum(i.price)/m.family_count as average
-			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -5 month) and DATE_ADD(now(), interval -4 month)
-			group by m.userId, m.family_count)a1
-			)b1
-		)
-union all
-(select (ifnull (total_avg, "0"))  as total_avg
-from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
-		from(select m.userId as u_id, sum(i.price)/m.family_count as average
-			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -6 month) and DATE_ADD(now(), interval -5 month)
-			group by m.userId, m.family_count)a1
-			)b1
-		)
-union all
-(select (ifnull (total_avg, "0"))  as total_avg
-from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
-		from(select m.userId as u_id, sum(i.price)/m.family_count as average
-			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -7 month) and DATE_ADD(now(), interval -6 month)
-			group by m.userId, m.family_count)a1
-			)b1
-		)
-union all
-(select (ifnull (total_avg, "0"))  as total_avg
-from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
-		from(select m.userId as u_id, sum(i.price)/m.family_count as average
-			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -8 month) and DATE_ADD(now(), interval -7 month)
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -10 month) and DATE_ADD(now(), interval -9 month)
 			group by m.userId, m.family_count)a1
 			)b1
 		)
@@ -95,7 +50,7 @@ union all
 from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
 		from(select m.userId as u_id, sum(i.price)/m.family_count as average
 			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -10 month) and DATE_ADD(now(), interval -9 month)
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -8 month) and DATE_ADD(now(), interval -7 month)
 			group by m.userId, m.family_count)a1
 			)b1
 		)
@@ -104,7 +59,7 @@ union all
 from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
 		from(select m.userId as u_id, sum(i.price)/m.family_count as average
 			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -11 month) and DATE_ADD(now(), interval -10 month)
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -7 month) and DATE_ADD(now(), interval -6 month)
 			group by m.userId, m.family_count)a1
 			)b1
 		)
@@ -113,7 +68,52 @@ union all
 from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
 		from(select m.userId as u_id, sum(i.price)/m.family_count as average
 			from shopping_list s, item i, member m
-			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -12 month) and DATE_ADD(now(), interval -11 month)
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -6 month) and DATE_ADD(now(), interval -5 month)
+			group by m.userId, m.family_count)a1
+			)b1
+		)
+union all
+(select (ifnull (total_avg, "0"))  as total_avg
+from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
+		from(select m.userId as u_id, sum(i.price)/m.family_count as average
+			from shopping_list s, item i, member m
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -5 month) and DATE_ADD(now(), interval -4 month)
+			group by m.userId, m.family_count)a1
+			)b1
+		)
+union all
+(select (ifnull (total_avg, "0"))  as total_avg
+from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
+		from(select m.userId as u_id, sum(i.price)/m.family_count as average
+			from shopping_list s, item i, member m
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -4 month) and DATE_ADD(now(), interval -3 month)
+			group by m.userId, m.family_count)a1
+			)b1
+		)
+union all
+(select (ifnull (total_avg, "0"))  as total_avg
+from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
+		from(select m.userId as u_id, sum(i.price)/m.family_count as average
+			from shopping_list s, item i, member m
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -3 month) and DATE_ADD(now(), interval -2 month)
+			group by m.userId, m.family_count)a1
+			)b1
+		)
+union all
+(select (ifnull (total_avg, "0"))  as total_avg
+from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
+		from(select m.userId as u_id, sum(i.price)/m.family_count as average
+			from shopping_list s, item i, member m
+			where s.list_id = i.list_id and s.userId = m.userId and purchase_date between DATE_ADD(now(), interval -2 month) and DATE_ADD(now(), interval -1 month)
+			group by m.userId, m.family_count)a1
+			)b1
+		)
+union all
+(select (ifnull (total_avg, "0"))  as total_avg
+from (select sum(a1.average)/count(distinct a1.u_id) as total_avg
+		from(select m.userId as u_id, sum(i.price)/m.family_count as average
+			from shopping_list s, item i, member m
+			where s.list_id = i.list_id and s.userId = m.userId and  purchase_date >= DATE_ADD(now(), interval -1 month)
 			group by m.userId, m.family_count)a1
 			)b1
 		);
@@ -130,49 +130,19 @@ from
 (select( ifnull (user_avg, "0"))  as user_avg
 from (select sum(price)/max(m.family_count) as user_avg 
 	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date >= DATE_ADD(now(), interval -1 month))a1
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -12 month) and DATE_ADD(now(), interval -11 month))a12
     )b1
 union all
 (select( ifnull (user_avg, "0")) as user_avg
 from(select sum(price)/max(m.family_count) as user_avg
 	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -2 month) and DATE_ADD(now(), interval -1 month))a2
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -11 month) and DATE_ADD(now(), interval -10 month))a11
     )
 union all
 (select( ifnull (user_avg, "0")) as user_avg
 from(select sum(price)/max(m.family_count) as user_avg
 	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -3 month) and DATE_ADD(now(), interval -2 month))a3
-    )
-union all
-(select( ifnull (user_avg, "0")) as user_avg
-from(select sum(price)/max(m.family_count) as user_avg
-	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -4 month) and DATE_ADD(now(), interval -3 month))a4
-    )
-union all
-(select( ifnull (user_avg, "0")) as user_avg
-from(select sum(price)/max(m.family_count) as user_avg
-	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -5 month) and DATE_ADD(now(), interval -4 month))a5
-    )
-union all
-(select( ifnull (user_avg, "0")) as user_avg
-from(select sum(price)/max(m.family_count) as user_avg
-	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -6 month) and DATE_ADD(now(), interval -5 month))a6
-    )
-union all
-(select( ifnull (user_avg, "0")) as user_avg
-from(select sum(price)/max(m.family_count) as user_avg
-	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -7 month) and DATE_ADD(now(), interval -6 month))a7
-    )
-union all
-(select( ifnull (user_avg, "0")) as user_avg
-from(select sum(price)/max(m.family_count) as user_avg
-	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -8 month) and DATE_ADD(now(), interval -7 month))a8
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -10 month) and DATE_ADD(now(), interval -9 month))a10 
     )
 union all
 (select( ifnull (user_avg, "0")) as user_avg
@@ -184,19 +154,49 @@ union all
 (select( ifnull (user_avg, "0")) as user_avg
 from(select sum(price)/max(m.family_count) as user_avg
 	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -10 month) and DATE_ADD(now(), interval -9 month))a10
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -8 month) and DATE_ADD(now(), interval -7 month))a8
     )
 union all
 (select( ifnull (user_avg, "0")) as user_avg
 from(select sum(price)/max(m.family_count) as user_avg
 	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -11 month) and DATE_ADD(now(), interval -10 month))a11
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -7 month) and DATE_ADD(now(), interval -6 month))a7
     )
 union all
 (select( ifnull (user_avg, "0")) as user_avg
 from(select sum(price)/max(m.family_count) as user_avg
 	from shopping_list s, item i, member m
-	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -12 month) and DATE_ADD(now(), interval -11 month))a12
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -6 month) and DATE_ADD(now(), interval -5 month))a6
+    )
+union all
+(select( ifnull (user_avg, "0")) as user_avg
+from(select sum(price)/max(m.family_count) as user_avg
+	from shopping_list s, item i, member m
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -5 month) and DATE_ADD(now(), interval -4 month))a5
+    )
+union all
+(select( ifnull (user_avg, "0")) as user_avg
+from(select sum(price)/max(m.family_count) as user_avg
+	from shopping_list s, item i, member m
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -4 month) and DATE_ADD(now(), interval -3 month))a4
+    )
+union all
+(select( ifnull (user_avg, "0")) as user_avg
+from(select sum(price)/max(m.family_count) as user_avg
+	from shopping_list s, item i, member m
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -3 month) and DATE_ADD(now(), interval -2 month))a3
+    )
+union all
+(select( ifnull (user_avg, "0")) as user_avg
+from(select sum(price)/max(m.family_count) as user_avg
+	from shopping_list s, item i, member m
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date between DATE_ADD(now(), interval -2 month) and DATE_ADD(now(), interval -1 month))a2
+    )
+union all
+(select( ifnull (user_avg, "0")) as user_avg
+from(select sum(price)/max(m.family_count) as user_avg
+	from shopping_list s, item i, member m
+	where s.userId=#{userId} and s.list_id = i.list_id and m.userId = s.userId and purchase_date >= DATE_ADD(now(), interval -1 month))a1
     );
 	]]>
 	</select>
@@ -206,32 +206,32 @@ from(select sum(price)/max(m.family_count) as user_avg
 
 	<select id="categoryAvg3" resultMap="CategoryAvg">
 	<![CDATA[
-	select l2.code02_vl, sum(i.price)/tot.total*100 as percentage
+	select l1.code01_vl, sum(i.price)/tot.total*100 as percentage
 	from (select sum(i.price) as total
 			from shopping_list s, item i, member m
-			where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and s.purchase_date >= DATE_ADD(now(), interval -3 month)) as tot, shopping_list s, item i, level2 l2, member m
-	where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and i.code02=l2.code02 and s.purchase_date >= DATE_ADD(now(), interval -3 month) 
-	group by l2.code02_vl, tot.total;
+			where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and s.purchase_date >= DATE_ADD(now(), interval -3 month))as tot, shopping_list s, item i, level1 l1, member m
+	where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and i.code01=l1.code01 and s.purchase_date >= DATE_ADD(now(), interval -3 month) 
+	group by l1.code01_vl, tot.total;
 	]]>
 	</select>
 	<select id="categoryAvg6" resultMap="CategoryAvg">
 	<![CDATA[
-	select l2.code02_vl, sum(i.price)/tot.total*100 as percentage
+	select l1.code01_vl, sum(i.price)/tot.total*100 as percentage
 	from (select sum(i.price) as total
 			from shopping_list s, item i, member m
-			where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and s.purchase_date >= DATE_ADD(now(), interval -6 month)) as tot, shopping_list s, item i, level2 l2, member m
-	where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and i.code02=l2.code02 and s.purchase_date >= DATE_ADD(now(), interval -6 month) 
-	group by l2.code02_vl, tot.total;
+			where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and s.purchase_date >= DATE_ADD(now(), interval -6 month))as tot, shopping_list s, item i, level1 l1, member m
+	where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and i.code01=l1.code01 and s.purchase_date >= DATE_ADD(now(), interval -6 month) 
+	group by l1.code01_vl, tot.total;
 	]]>
 	</select>
 	<select id="categoryAvg12" resultMap="CategoryAvg">
 	<![CDATA[
-	select l2.code02_vl, sum(i.price)/tot.total*100 as percentage
+	select l1.code01_vl, sum(i.price)/tot.total*100 as percentage
 	from (select sum(i.price) as total
 			from shopping_list s, item i, member m
-			where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and s.purchase_date >= DATE_ADD(now(), interval -12 month))as tot, shopping_list s, item i, level2 l2, member m
-	where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and i.code02=l2.code02 and s.purchase_date >= DATE_ADD(now(), interval -12 month) 
-	group by l2.code02_vl, tot.total;
+			where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and s.purchase_date >= DATE_ADD(now(), interval -12 month))as tot, shopping_list s, item i, level1 l1, member m
+	where s.userId=#{userId} and s.userId=m.userId and s.list_id=i.list_id and i.code01=l1.code01 and s.purchase_date >= DATE_ADD(now(), interval -12 month) 
+	group by l1.code01_vl, tot.total;
 	]]>
 	</select>
 	

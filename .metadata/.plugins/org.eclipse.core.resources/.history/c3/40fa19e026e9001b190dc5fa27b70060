@@ -1,0 +1,67 @@
+package com.sharp.ing.firebase;
+
+import java.io.FileInputStream;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.sharp.ing.domain.FirebaseDAO;
+import com.sharp.ing.domain.FirebaseDTO;
+
+@Service("FirebaseMessagingSnippets")
+public class FirebaseMessagingSnippets {
+	
+	private FirebaseDAO firebaseDAO;
+	
+	@Autowired
+	public FirebaseMessagingSnippets(FirebaseDAO firebaseDAO) {
+		this.firebaseDAO = firebaseDAO;
+	}
+
+	@Scheduled(fixedDelay = 1000)
+	public void sendToToken() throws Exception{
+		
+		FileInputStream serviceAccount = null;
+		FirebaseOptions options = null;
+		
+		serviceAccount = new FileInputStream("src/main/resources/static/bit-academy-project-a9c77-firebase-adminsdk-3stp7-ad4640314f.json");
+		options = new FirebaseOptions.Builder()
+				  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+				  .build();
+		
+		if(FirebaseApp.getApps().isEmpty()) {
+            FirebaseApp.initializeApp(options);
+        }
+	
+		List<FirebaseDTO> idAndTokenList = firebaseDAO.getUserIdAndFirebaseToken();
+		System.out.println(idAndTokenList);
+		//System.out.println(idAndTokenList);
+		
+	    // [START send_to_token]
+	    // This registration token comes from the client FCM SDKs.
+	    //String registrationToken = 
+	    		//"eB4tPQOx85w:APA91bEtgBYc5K0DCVeKlr25ZpQIRn6ck-avXWfTnm2FdZe6ca_DvIFcFJ2tTKXY7J899iRAzaYf6Ye9Ir06HdMUIKFW82qn6O-3edjw-YX1ZTtzA5ossW8R6nqiVoalpU8qEsV6T77H";
+
+	    // See documentation on defining a message payload.
+//	    Message message =Message.builder()
+//		        .setNotification(Notification.builder()
+//		            .setTitle("Price drop")
+//		            .setBody("5% off all electronics")
+//		            .build())
+//		        .setToken(registrationToken)
+//		        .build();
+
+	    // Send a message to the device corresponding to the provided
+	    // registration token.
+	    //String response = FirebaseMessaging.getInstance().send(message);
+	    // Response is a message ID string.
+	    //System.out.println("Successfully sent message: " + response);
+	    // [END send_to_token]
+	  }
+
+}

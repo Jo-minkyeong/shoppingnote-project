@@ -1,0 +1,15 @@
+package com.sharp.ing.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class ScheduleService {
+ 
+	@Autowired
+	private SchedulerFactoryBean schedulerFactoryBean;
+	
+	
+}

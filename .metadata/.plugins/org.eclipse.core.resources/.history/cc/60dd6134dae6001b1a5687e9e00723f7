@@ -1,0 +1,34 @@
+package com.sharp.ing.configure;
+
+import java.util.Properties;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+
+import com.sharp.ing.service.AutowiringSpringBeanJobFactory;
+
+public class QuartzConfig {
+
+	@Bean
+	public SchedulerFactoryBean schedulerFactoryBean(ApplicationContext applicationContext) {
+	   SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+	 
+	   AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
+	   jobFactory.setApplicationContext(applicationContext);
+	   schedulerFactoryBean.setJobFactory(jobFactory);
+	 
+	   schedulerFactoryBean.setApplicationContext(applicationContext);
+	   
+	   Properties properties = new Properties();
+	   properties.putAll(quartzProperties.getProperties());
+	 
+	   schedulerFactoryBean.setGlobalTriggerListeners(triggersListener);
+	   schedulerFactoryBean.setGlobalJobListeners(jobsListener);
+	   schedulerFactoryBean.setOverwriteExistingJobs(true);
+	   schedulerFactoryBean.setQuartzProperties(properties);
+	   schedulerFactoryBean.setWaitForJobsToCompleteOnShutdown(true);
+	   return schedulerFactoryBean;
+	}
+	
+}

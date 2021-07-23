@@ -58,6 +58,17 @@ public class DataController {
 		this.service = service;
 	}
 
+	
+	@RequestMapping("/test")
+	public String Test() throws Exception {
+
+		logger.debug("=========================Test========================");
+
+		System.out.println("hi~~~");
+
+		return "success";
+	}
+	
 	// 카데고리 코드 조회
 //	@RequestMapping("/category")
 //	public String Category(Model model) throws Exception {
@@ -206,7 +217,7 @@ public class DataController {
 
 		logger.debug("=========================DeleteItem=========================");
 
-//		[{},{}]	
+		//구조: [{},{}]	
 		ShoppingItemDTO[] array = gson3.fromJson(param.toString(), ShoppingItemDTO[].class);
 		List<ShoppingItemDTO> item = Arrays.asList(array);
 		service.DeleteItem(item);

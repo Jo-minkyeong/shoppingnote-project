@@ -1,0 +1,21 @@
+package com.sharp.ing.configure;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
+
+@Configuration
+public class SchedulerConfig implements SchedulingConfigurer {
+	private final static int POOL_SIZE = 10;
+	
+	@Override
+	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+		 final ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+
+	        threadPoolTaskScheduler.setPoolSize(POOL_SIZE);
+	        threadPoolTaskScheduler.setThreadNamePrefix("hello-");
+	        threadPoolTaskScheduler.initialize();
+
+	        taskRegistrar.setTaskScheduler(threadPoolTaskScheduler);
+	    }
+
+}

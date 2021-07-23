@@ -4,9 +4,15 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-@Component("purchaseDTO ")
+@Component("purchaseDTO")
 public class PurchaseDTO {
 
+	public int code01;
+	
+	public int code02;
+	
+	public int code03;
+	
 	public int code04;
 	
 	public String code04_vl;
@@ -19,9 +25,32 @@ public class PurchaseDTO {
 	
 	public String userId;
 	
-	public int item_no;
-	
 	public int list_id;
+	
+	
+	public int getCode01() {
+		return code01;
+	}
+
+	public void setCode01(int code01) {
+		this.code01 = code01;
+	}
+
+	public int getCode02() {
+		return code02;
+	}
+
+	public void setCode02(int code02) {
+		this.code02 = code02;
+	}
+
+	public int getCode03() {
+		return code03;
+	}
+
+	public void setCode03(int code03) {
+		this.code03 = code03;
+	}
 
 	public int getCode04() {
 		return code04;
@@ -69,14 +98,6 @@ public class PurchaseDTO {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-	public int getItem_no() {
-		return item_no;
-	}
-
-	public void setItem_no(int item_no) {
-		this.item_no = item_no;
 	}
 
 	public int getList_id() {

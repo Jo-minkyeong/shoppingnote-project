@@ -1,0 +1,5 @@
+package com.sharp.ing.configure;
+
+public interface AutowiringSpringBeanJobFactory {
+
+}

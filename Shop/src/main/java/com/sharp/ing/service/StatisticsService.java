@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.sharp.ing.domain.CategoryAvgDTO;
@@ -13,9 +14,9 @@ import com.sharp.ing.domain.StatisticsDAO;
 
 @Service("StatisticsService")
 public class StatisticsService {
-	
+
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.StatisticsService");
-	
+
 	private StatisticsDAO statisticsDAO;
 
 	@Autowired
@@ -24,6 +25,7 @@ public class StatisticsService {
 	}
 
 	// 전체 소비 평균 값
+//	@Scheduled(fixedDelay = 1000)
 	public List<ShoppingListDTO> TotalAvg() throws Exception {
 		List<ShoppingListDTO> totalAvg = statisticsDAO.totalAvg();
 		return totalAvg;

@@ -26,7 +26,7 @@ public class ItemDTO {
 	// 세분류 코드 값 
 	private String code04_vl;
 	// 용량 적어주는 칸
-	public int qt;
+	public float qt;
 	// 용량 단위 코드
 	public String qt_code;
 
@@ -118,11 +118,11 @@ public class ItemDTO {
 		this.qt_code = qt_code;
 	}
 
-	public int getQt() {
+	public float getQt() {
 		return qt;
 	}
 
-	public void setQt(int qt) {
+	public void setQt(float qt) {
 		this.qt = qt;
 	}
 

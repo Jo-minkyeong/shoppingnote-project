@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,18 +48,19 @@ public class UserController {
 	private final UserService userService;
 
 	// 회원가입
-	@PostMapping("/join")
-	public String join(@RequestBody Map<String, String> member) {
+	@RequestMapping(value = "/join", method = RequestMethod.POST, consumes = "application/json; charset=utf-8")
+	public String join(@RequestBody Map<String, String> member) throws Exception{
 		return userRepository.save(Member.builder()
 				.userId(member.get("userId"))
 				.password(passwordEncoder.encode(member.get("password")))
 				.role(Collections.singletonList("ROLE_USER")) // 가입시 USER로 기본 설정
 				.family_count(member.get("family_count"))
+				.fb_token(member.get("fb_token"))
 				.build()).getUserId();
 	}
 
 	// 로그인
-	@PostMapping("/login")
+	@PostMapping("/login" )
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequestDto authenticationRequestDto) throws Exception {
 		Authentication authentication;
 		try {
@@ -75,7 +77,7 @@ public class UserController {
 		return ResponseEntity.ok(new AuthenticationResponseDto(jwt));
 	}
 
-
+	//user 인증 확인
 	@PostMapping("/user")
 	public ResponseEntity<?> authenticate(HttpServletRequest request, Authentication authentication) {
 
@@ -86,6 +88,7 @@ public class UserController {
 		return ResponseEntity.ok("인증 성공");
 	}
 
+	//user id 확인
 	@GetMapping("/member")
 	@ResponseBody 
 	public String currentUserName(Authentication authentication) {
@@ -93,11 +96,24 @@ public class UserController {
 
 		return userDetails.getUsername(); 
 	}
+	
+	
+//	@GetMapping("/test")
+//	@ResponseBody 
+//	public String test(Authentication authentication, Model model) {
+//		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//		String userId = userDetails.getUsername();
+//		
+//		System.out.println(userService.checkUserIdDuplicate(userId));
+//		
+//		return ""+userService.checkUserIdDuplicate(userId);
+//	}
 
+	//중복 확인
 	@GetMapping("/idcheck/{userId}")
 	public ResponseEntity<Boolean> checkUserIdDuplicate(@PathVariable String userId) {
 		return ResponseEntity.ok(userService.checkUserIdDuplicate(userId));
 	}
-	
+
 	
 }

@@ -2,16 +2,16 @@ package com.sharp.ing.domain;
 
 public class CategoryAvgDTO {
 
-	private String code02_vl;
+	private String code01_vl;
 	
 	private float percentage;
 	
-	public String getCode02_vl() {
-		return code02_vl;
+	public String getCode01_vl() {
+		return code01_vl;
 	}
 
-	public void setCode02_vl(String code02_vl) {
-		this.code02_vl = code02_vl;
+	public void setCode01_vl(String code01_vl) {
+		this.code01_vl = code01_vl;
 	}
 
 	public float getPercentage() {

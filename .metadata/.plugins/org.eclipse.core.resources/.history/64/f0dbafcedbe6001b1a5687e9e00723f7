@@ -1,0 +1,5 @@
+package com.sharp.ing.service;
+
+public class ScheduledService {
+
+}

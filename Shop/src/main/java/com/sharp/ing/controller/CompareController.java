@@ -29,7 +29,7 @@ public class CompareController {
 	//필드
 	private CompareService service;
 	private List<CompareDTO> listCompare;
-	private List<PurchaseDTO> listPurchase;
+	private List<CompareDTO> listAnalysis;
 	
 	//생성자
 	@Autowired
@@ -37,6 +37,7 @@ public class CompareController {
 		this.service = service;
 	}
 	
+	//가격비교
 	@RequestMapping(value="/compare")
 	public JSONObject Compare(@RequestParam(value = "code01") int code01, @RequestParam(value = "code02") int code02, 
 			@RequestParam(value = "code03") int code03, @RequestParam(value = "code04") int code04, Model model) throws Exception {
@@ -51,25 +52,18 @@ public class CompareController {
 		
 	}
 	
+	//분석
 	@RequestMapping(value="/analysis")
-	public JSONObject Analysis(Authentication authentication, Model model) throws Exception {
+	public List<CompareDTO> Analysis(Authentication authentication, Model model) throws Exception {
 		
-		logger.debug("=========================Compare=========================");
+		logger.debug("=========================Analysis=========================");
+		
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
 		
-		listPurchase = service.analysis(userId);
-		
-		logger.debug("=========================Compare=========================");
-		
-//		JSONObject difference = service.Difference();
-//		model.addAttribute(model);
-		
-		data.put("listPurchase", listPurchase);
-//		data.put("difference", difference);
-	
-		
-		return data;
+		List<CompareDTO> listAnalysis = service.analysis(userId);
+
+		return listAnalysis;
 		
 	}
 	

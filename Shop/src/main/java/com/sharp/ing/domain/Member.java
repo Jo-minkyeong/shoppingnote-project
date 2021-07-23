@@ -39,8 +39,7 @@ public class Member implements UserDetails {
 	private String userId;
 	private String password;
 	private String family_count;
-	private String provider;
-	private String providerId;
+	private String fb_token;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default

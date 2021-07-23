@@ -1,8 +1,0 @@
-package com.sharp.ing.repository;
-
-public interface UserRepository extends JpaRepository<Member, Long>{
-	
-	 Optional<Member> findByUserId(String userId);
-	 
-	 boolean existsByUserId(String userId);
-}

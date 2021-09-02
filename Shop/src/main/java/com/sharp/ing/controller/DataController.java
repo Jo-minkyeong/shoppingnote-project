@@ -69,15 +69,6 @@ public class DataController {
 		return "success";
 	}
 	
-	// 카데고리 코드 조회
-//	@RequestMapping("/category")
-//	public String Category(Model model) throws Exception {
-//
-//		listCategory = service.Category();
-//		model.addAttribute("category", listCategory);
-//		logger.debug("=========================getLevel1=========================");
-//		return "index.html";
-//	}
 
 	// 카데고리 코드 조회
 	// 실제 listCategory로 받아와서 실행 시켜볼때 하는 방법
@@ -92,20 +83,6 @@ public class DataController {
 		return listCategory;
 	}
 
-//	@RequestMapping(value = "/item", method = RequestMethod.POST, consumes = "application/json; charset=utf-8")
-// List<Map<String, Object>> => List가 map을 감싸고 있는 형태일때 
-//	public @ResponseBody String Item(@RequestBody List<Map<String, Object>> param) throws Exception {
-//		logger.debug("param ======== "+param.toString());
-//		// 구글의 json paser 라이브러리
-//		Gson gson = new Gson();
-//		ItemDTO[] array = gson.fromJson(param.toString(), ItemDTO[].class);
-//		
-//		// asList => 배열을 리스트로 바꾸어줌/ java.util.Arrays.ArrayList (Arrays클래스의 메소드로 ArrayList로 바꾸어줌, 사이즈 고정)/ java.util.ArrayList 클래스와는 다른 클래스
-//		List<ItemDTO> item = Arrays.asList(array);
-//		service.Item(item);
-//
-//		return "success";
-//	}
 
 	// 리스트 생성, 물품등록
 	// http통신할때 post는 body에다 data를 집어넣어서 받아오는 용도 (프론트에서 data를 받아옴)
@@ -203,13 +180,6 @@ public class DataController {
 		return "success";
 	}
 
-	// 리스트 삭제
-//	@RequestMapping(value = "/deletelist")
-//	public String DeleteList(@RequestParam(value = "list_id") int list_id) throws Exception {
-//		logger.debug("=========================DeleteList=========================");
-//		service.DeleteList(list_id);
-//		return "index.html";
-//	}
 
 	// 물품 삭제
 	@RequestMapping(value = "/deleteitem", method = RequestMethod.POST, consumes = "application/json; charset=utf-8")

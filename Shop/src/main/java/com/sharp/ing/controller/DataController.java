@@ -140,14 +140,6 @@ public class DataController {
 
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
-//		if(list_id != null) {
-//			service.ViewShoppingItem(userId, list_id);
-//			listShoppingItem = service.ViewShoppingItem(userId, list_id);
-//			return listShoppingItem;
-//		}else 
-//			service.ViewTotalShopping(userId);
-//			listTotalShopping = service.ViewTotalShopping(userId);
-//			return listTotalShopping;
 
 		JSONObject detail = service.ViewShoppingItem(userId, list_id);
 

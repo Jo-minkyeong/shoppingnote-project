@@ -124,32 +124,6 @@
 		code01=values(code01), code02=values(code02), code03=values(code03), code04=values(code04), qt_code=values(qt_code), qt=values(qt)
 	</insert>
 
-	<!-- <insert id="upsertItem" parameterType="com.sharp.ing.domain.ItemDTO"> 
-		insert into item (list_id, item_no, mart_code, price, amount, code01, code02, 
-		code03, code04, qt_code, qt) values (#{list_id}, #{item_no}, #{mart_code}, 
-		#{price}, #{amount}, #{code01}, #{code02}, #{code03}, #{code04}, #{qt_code} 
-		,#{qt}) on duplicate key update list_id=values(list_id), item_no=values(item_no), 
-		mart_code=values(mart_code), price=values(price), amount=values(amount), 
-		code01=values(code01), code02=values(code02), code03=values(code03), code04=values(code04), 
-		qt_code=values(qt_code), qt=values(qt) </insert> -->
-
-
-	<!-- <delete id="deleteList" parameterType="int"> <![CDATA[ delete from 
-		shopping_list where list_id = #{list_id} ]]> </delete> <delete id="deleteItemList" 
-		parameterType="int"> <![CDATA[ delete from item where list_id = #{list_id} 
-		]]> </delete> -->
-
-	<!-- <delete id="deleteItem" parameterType="java.util.List"> delete from 
-		item <where> FIND_IN_SET(pushMsgID, #{inQuery}) <foreach collection="list" 
-		item="item" separator=";"> (list_id=#{item.list_id} and item_no=#{item.item_no}) 
-		</foreach> </where> </delete> -->
-
-	<!-- <delete id="deleteItem" parameterType="java.util.List"> delete from 
-		item <where> <if test="@com.sharp.ing.service.DataService@DeleteItem or isEmpty(list_id)"> 
-		AND list_id = #{list_id} <foreach collection="list" item="item" separator="OR"> 
-		(list_id=#{item.list_id} and item_no=#{item.item_no}) </foreach> </if> </where> 
-		</delete> -->
-
 	<delete id="deleteItem" parameterType="java.util.List">
 		delete from item
 		<choose>
@@ -166,10 +140,5 @@
 		</choose>
 	</delete>
 
-
-
-	<!-- <delete id="deleteItem" parameterType="java.util.List"> delete from 
-		item <where> <foreach collection="list" item="item" separator="or"> and FIND_IN_SET(#{item.list_id}, 
-		#{item.item_no}) </foreach> </where> </delete> -->
 </mapper>
 

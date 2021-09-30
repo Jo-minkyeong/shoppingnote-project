@@ -34,6 +34,7 @@ public class DataController {
 
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
 
+	
 // 	JSONObject TotalShopping = new JSONObject();
 // 	JSONObject data = new JSONObject();
 

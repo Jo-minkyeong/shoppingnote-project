@@ -42,7 +42,7 @@ public class NoteController {
 	JSONObject TotalNote = new JSONObject();
 
 	Gson gson = new Gson();
-	Gson gson2 = new Gson();
+
 
 	@Autowired
 	public NoteController(Shopping_note_headerDTO headerDTO, Shopping_noteDTO noteDTO, NoteService service) {
@@ -101,10 +101,10 @@ public class NoteController {
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		String userId = userDetails.getUsername();
 
-		Integer noteId = gson2.fromJson(param.get("note_id").toString(), Integer.class);
+		Integer noteId = gson.fromJson(param.get("note_id").toString(), Integer.class);
 		service.EditNoteHeader(userId,noteId);
 		
-		Shopping_noteDTO[] test =  gson2.fromJson(param.get("body").toString(), Shopping_noteDTO[].class);
+		Shopping_noteDTO[] test =  gson.fromJson(param.get("body").toString(), Shopping_noteDTO[].class);
 		List<Shopping_noteDTO> items = Arrays.asList(test);
 		for(Shopping_noteDTO a : items) {
 			a.setNote_id(noteId);

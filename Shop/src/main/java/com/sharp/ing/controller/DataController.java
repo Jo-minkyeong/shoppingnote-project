@@ -34,13 +34,11 @@ public class DataController {
 
 	Logger logger = LoggerFactory.getLogger("com.sharp.ing.controller.DataController");
 
-	JSONObject TotalShopping = new JSONObject();
-	JSONObject data = new JSONObject();
+// 	JSONObject TotalShopping = new JSONObject();
+// 	JSONObject data = new JSONObject();
 
 	// 구글의 json paser 라이브러리
 	Gson gson = new Gson();
-	Gson gson2 = new Gson();
-	Gson gson3 = new Gson();
 
 	// 필드
 	// 생성자에 @Autowired를 붙여줬기때문에 필드에는 붙일 필요 없음
@@ -160,12 +158,12 @@ public class DataController {
 		JsonParser jparser = new JsonParser();
 
 		JsonElement editItem = jparser.parse(param.get("head").toString());
-		listDTO = gson2.fromJson(editItem, ShoppingListDTO.class);
+		listDTO = gson.fromJson(editItem, ShoppingListDTO.class);
 		listDTO.setuserId(userId);
 		service.EditItemHead(listDTO);
 
 		JsonElement editItems = jparser.parse(param.get("body").toString());
-		ItemDTO[] item = gson2.fromJson(editItems.toString(), ItemDTO[].class);
+		ItemDTO[] item = gson.fromJson(editItems.toString(), ItemDTO[].class);
 		List<ItemDTO> items = Arrays.asList(item);
 		service.EditItem(items);
 
@@ -180,7 +178,7 @@ public class DataController {
 		logger.debug("=========================DeleteItem=========================");
 
 		//구조: [{},{}]	
-		ShoppingItemDTO[] array = gson3.fromJson(param.toString(), ShoppingItemDTO[].class);
+		ShoppingItemDTO[] array = gson.fromJson(param.toString(), ShoppingItemDTO[].class);
 		List<ShoppingItemDTO> item = Arrays.asList(array);
 		service.DeleteItem(item);
 
